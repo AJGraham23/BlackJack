@@ -1,0 +1,16 @@
+.Button button{
+    border-radius: 10px;
+    margin: 5px;
+    padding: 8px 5px;
+    font-family: sans-serif;
+    font-size: large;
+    color: black;
+    font-weight: bold;
+    background-image: linear-gradient(brown ,orange ,yellow ,orange ,brown );
+    outline: thin ;
+    box-shadow: 0 3px rgb(4, 63, 4);
+}
+.Button button:hover{
+    cursor: pointer;
+    color: rgb(33, 155, 211);
+}

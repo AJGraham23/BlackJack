@@ -1,0 +1,57 @@
+.Player {
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+    border: 1px ridge purple;
+    margin: 0 auto;
+    flex-basis: 48%;
+    width: 100%;
+    border: 2px yellow ridge;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* margin-left: 50px; */
+}
+
+
+.Player > div {
+    margin: 10px;
+    text-align: center;
+
+}
+
+.Deck{
+    height: 100%;
+    display: flex;
+    border: 1px ridge black;
+    margin: auto;
+    align-self: center;
+    flex-direction: column;
+    
+}
+
+
+.amount {
+    /* position: absolute; */
+}
+
+
+/* 
+.Money {
+    flex-basis: 25%;
+    /* flex-grow: 4; */
+    /* height: 100%;
+    border: cyan 1px ridge;
+} */
+
+/* .Controls {
+    flex-basis: 25%;
+    display: flex;
+    border: 1px ridge blue; */
+    /* width: 100%; */
+    /* flex-basis: 25%; */
+    /* height: 100%; */
+    /* flex-grow: 4; */
+/* }  */

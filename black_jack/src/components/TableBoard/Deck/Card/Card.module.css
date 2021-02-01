@@ -1,0 +1,54 @@
+.Card {
+    width: 35px;
+    height: 60px;
+    border: 1px ridge black;
+    border-radius: 15%;
+    position: relative;
+    box-shadow: inset 1px 2px 1px 0.1px grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Lobster';
+    background-color: rgb(241, 237, 237);
+    position: relative;
+    margin: 3px;
+}
+
+.Card span {
+    margin: auto;
+    align-self: center;
+}
+
+.Value{
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    font-size: 15px;
+    flex-basis:40%;
+    /* border: 1px ridge red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Suit{
+    margin: auto;
+    flex-basis:60%;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* border: 1px ridge green; */
+    width: 100%;
+}
+
+.Suit span {
+    margin: auto;
+    align-self: center;
+    font-size: 25px;
+}
+
+.Hiden {
+    background-color: tomato;
+    z-index: 2;
+}

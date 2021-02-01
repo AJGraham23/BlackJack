@@ -1,0 +1,35 @@
+.Control {
+}
+
+.Control button{   
+    background-color: rgb(33, 155, 211);
+    color: rgb(100, 7, 7);
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 104%;
+    font-variant-caps: all-petite-caps;
+    padding: 14%;
+    width: 140%;
+    margin: 5px 2px;
+    border-radius: 12px;
+    outline: thin ;
+    box-shadow: 0 6px rgb(4, 63, 4);
+}
+.Control button:hover{   
+    background-color: whitesmoke;
+    cursor: pointer;
+    color: rgb(33, 155, 211);
+    transition: ease-in 0.3s;
+    
+
+}
+
+.Control button:active{
+    box-shadow: 0 2px rgb(3, 37, 3);
+    transform: translateY(2px);
+}
+
+.Disabled:hover,.Disabled:active {
+    background-color: rgb(63, 63, 63);
+    cursor: not-allowed;
+}

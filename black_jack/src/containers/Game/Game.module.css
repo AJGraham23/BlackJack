@@ -1,0 +1,15 @@
+.Game{
+    width: 90%;
+    margin: auto;
+    border: 1px blue ridge;
+    margin-top: 30px;
+    position: relative;
+    height: 888px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Game h1{
+    margin: 0 auto;
+    flex-basis: 15%;
+}

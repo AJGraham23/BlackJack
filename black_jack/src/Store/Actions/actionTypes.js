@@ -1,0 +1,14 @@
+export const START_GAME = 'START_GAME';
+export const START_ROUND = 'START_ROUND';
+export const MAKE_BID = 'MAKE_BID';
+export const CHANGE_BUDGET = 'CHANGE_BUDGET';
+export const DEVIDE_STARTING_CARDS = 'DEVIDE_STARTING_CARDS';
+export const ROUND_STATUS = 'ROUND_STATUS';
+export const STAND = 'STAND';
+export const ADD_CARD = 'ADD_CARD';
+export const CHANGE_CARDS_SUM = 'CHANGE_CARDS_SUM';
+export const INIT_ROUND = 'INIT_ROUND';
+export const DOUBLE_BID = 'DOUBLE_BID';
+// export const USE_ACE_OTHER_VALUE = 'USE_ACE_OTHER_VALUE';
+// export const DEVIDE_STARTING_CARD = 'DEVIDE_STARTING_CARD';
+// export const CHANGE_BID = 'CHANGE_BID';

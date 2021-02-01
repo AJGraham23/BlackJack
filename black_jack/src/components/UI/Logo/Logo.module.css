@@ -1,0 +1,33 @@
+.Logo {
+    color: rgb(98, 101, 107);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    /* padding: 40px; */
+    box-sizing: content-box;
+    box-shadow: dimgrey 2px 1px 2px;
+    margin-left: 80px;
+    width: 50px;
+    /* height: 10px; */
+    display: flex;
+}
+/* 
+img:hover{
+   fill: red;
+   color: royalblue;
+   background-color: royalblue;
+   
+} */
+
+.Logo a {
+    /* padding: 15px; */
+    margin-top: -5px;
+    flex-basis: auto;
+    padding: 25px;
+    background-image: url("../../../pictures/logo.png"); /* The image used */
+    background-color: #cccccc; /* Used if the image is unavailable */
+    height: inherit; /* You must set a specified height */
+    width: 100%;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}

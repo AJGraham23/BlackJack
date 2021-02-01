@@ -1,0 +1,37 @@
+.Deck {
+    align-items: center;
+    margin: auto;
+    flex-direction: column-reverse;
+    align-items: baseline;
+    border: red 1px ridge;
+    display: inline-block;
+    align-items: center;
+    margin: auto;
+    /* flex-basis: 80%; */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: cadetblue;
+}
+
+
+
+.Cards{
+    flex-wrap: wrap;
+    height: 100%;
+    width: 130px;
+    height: min-content;    
+    align-items: flex-start;
+    margin: 3px auto;
+    display: flex;
+    flex-basis: 80%;
+}
+
+.Deck p {
+    flex-basis: 10%;
+    color: blue;
+}
+/* .Card {
+    align-items: center;
+    margin: auto;
+} */
