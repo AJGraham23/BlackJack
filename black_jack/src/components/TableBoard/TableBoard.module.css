@@ -31,7 +31,7 @@
 
 .Money {
     flex-basis: 25%;
-    /* flex-grow: 4; */
+    /* flex-grow: 3; */
     height: 100%;
     order: 1;
     border: cyan 1px ridge;
@@ -43,7 +43,6 @@
     flex-basis: 25%;
     display: flex;
     border: 1px ridge blue;
-    /* width: 100%; */
     /* flex-basis: 25%; */
     height: 100%;
     /* flex-grow: 4; */
