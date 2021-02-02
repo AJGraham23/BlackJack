@@ -17,7 +17,6 @@ const reduecer = (state = initState, action) => {
 
             let lost = action.newBudget === 0;
 
-            debugger;
             return {
                 ...state,
                 budget:action.newBudget,

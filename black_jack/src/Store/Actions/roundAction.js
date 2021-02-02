@@ -40,3 +40,9 @@ export const doubleBid = () => {
         type:actionTypes.DOUBLE_BID
     }
 }
+
+// export const splitAnotherDeck = () => {
+//     return {
+//         type:actionTypes.SPLIT_DECK
+//     }
+// }

@@ -30,3 +30,12 @@ export const initRound = (newBudget) => {
         }, 2001);
     }
 }
+
+
+export const splitAnotherDeck = (numOfSplits) => {
+    return {
+        type:actionTypes.SPLIT_DECK,
+        numOfSplits
+
+    }
+}

@@ -99,7 +99,7 @@ const Game = (props) => {
         
             <div className={classes.Game}>
                 <h1>Welcome to Blackjack</h1>
-                <p>
+                <p className={classes.roundResualt}>
                     {finalResualt}
                     {/* {props.roundStatus === 'lost'?'dealer won': props.roundStatus === 'win' ? 'you won' : ''} */}
                 </p>

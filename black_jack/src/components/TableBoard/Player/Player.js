@@ -30,7 +30,6 @@ class Player extends Component {
     }
 
     render() {
-        // debugger;
         let renderCardDecks = this.props.playerCards.map((deck,deckIndex)=> {
         return  <Deck
                     key={`deckNumber${deckIndex}`}

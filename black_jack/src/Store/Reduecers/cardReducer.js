@@ -25,16 +25,12 @@ const playerDecks = {
 }
 
 
-
 const checkForDifferentSum = cards => {
     let countAces = 0;
     let sum = 0;
     
     for(let card of cards)
     {
-        // if(card.value > 9)
-        //     sum+=10;
-        // else
         if(card.value > 10 && !card.Ace)
         sum = sum + 10;
         else if(card.Ace)    
@@ -50,7 +46,6 @@ const checkForDifferentSum = cards => {
         for (let index = 1; index < countAces + 1; index++) {
             if(sum - index*10 < 22)
                 return (sum - index*10)
-            // if(index + 1 === countAces)
             closestToPassed = (sum - index*10)    
         }   
     }
@@ -86,7 +81,7 @@ const reduecer = (state = initState, action) => {
                 dealerCardsSum:dealerSum
             }
         case actionTypes.ADD_CARD:
-            debugger;
+            // debugger;
 
             let sum ;
             if(action.card.value > 10 && !action.card.Ace)
@@ -95,10 +90,8 @@ const reduecer = (state = initState, action) => {
                 sum = action.card.value + (action.holder === 'player' ? state.playerCardsSum[action.NumOfsplits] : state.dealerCardsSum);
             if(sum > 21)
                 sum = checkForDifferentSum([...(action.holder === 'player' ? state.playerCards[action.NumOfsplits] : state.dealerCards) , action.card]);
-            // if (cardValue > 10)
-            //     cardValue = 10;
-            // if (cardValue === 1)
-            //     cardValue = 11;
+       
+
             if(action.holder === 'player')
             {
                 let playerCardsSumArray = state.playerCardsSum.map((value,index)=>{
@@ -106,8 +99,15 @@ const reduecer = (state = initState, action) => {
                         return sum;
                     else return value;
                 })
+
+                let newPlayerCards = state.playerCards.map((deck,deckIndex)=>{
+                    if(deckIndex === action.NumOfsplits)
+                        return [...state.playerCards[deckIndex],action.card]
+                    else return state.playerCards[deckIndex]
+                });
+
                 return {...state,
-                playerCards:[...state.playerCards[action.NumOfsplits],action.card],
+                playerCards:newPlayerCards,
                 playerCardsSum:playerCardsSumArray
                 }
             }
@@ -131,10 +131,8 @@ const reduecer = (state = initState, action) => {
                         return action.newSum;
                     else return value;
                 })
-                // let playerDeck = handleAceCard(state.playerCards,action.indexOfCard);
                 return {
                     ...state,
-                    // playerCardsSum:action.newSum
                     playerCardsSum:playerCardsSumArray
                 }
             }
@@ -143,29 +141,40 @@ const reduecer = (state = initState, action) => {
             return {
                 ...initState
             }
+        case actionTypes.SPLIT_DECK:
+
+            debugger;
+
+            let cardToSplit;
+            let firstSplitedCard = state.playerCards[action.numOfSplits][0] 
+            let secondSplitedCard = state.playerCards[action.numOfSplits][1] 
+            let newPlayerCards = state.playerCards.map((deck,deckIndex)=>{
+                if(deckIndex === action.numOfSplits)
+                {
+                    cardToSplit = deck[1];
+                    return deck[deckIndex];
+                }
+                else return deck[deckIndex];
+            } ) ;
+            newPlayerCards = state.playerCards.concat([secondSplitedCard]);
+            // newPlayerCards = newPlayerCards[action.numOfSplits].slice(0,1);
+            let newPlayerSumCards = state.playerCardsSum.concat(state.sum[action.numOfSplits]/2);
+            newPlayerSumCards = newPlayerSumCards.map((el,index) => {
+                if(index === action.numOfsplits)
+                    return el/2
+                else return el;
+            })
+            debugger;
+            return {
+                ...state,
+                playerCards:newPlayerCards,
+                playerCardsSum:newPlayerSumCards
+                
+            }
         default:
             return state;
             
     }
 }
-
-
-// const handleAceCard = (cardsDeck , cardIndex) => {
-    
-//     let newCardsDeck = cardsDeck.map((card,cardIndex)=>{
-//         if(cardIndex === cardIndex)
-//         {
-//             return {
-//                 value:card.value,
-//                 symbol:card.symbol,
-//                 Ace:true
-//             }
-//         }
-//         else return card;
-//     })
-
-//     return newCardsDeck;
-    
-// }
 
 export default reduecer;

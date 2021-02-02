@@ -21,6 +21,7 @@ export class Controls extends Component {
 
     playerSpliting = () => {
         console.log('split and may god help us');
+        this.props.splitDecks(this.props.split)
     }
 
     canPlayerSplit = (cards) => {
@@ -28,7 +29,7 @@ export class Controls extends Component {
     }
 
     render() {
-        debugger;
+        // debugger;
         let numOfPlayerCards = this.props.playerCards[this.props.split].length;
         const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode;
         const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode;
@@ -41,7 +42,7 @@ export class Controls extends Component {
                 {/* hit */}
                 <Control
                     visibility = {hitButtonVisibility ? 'visible':'hidden'}
-                    clicked={this.props.giveOneMoreCard}
+                    clicked={this.props.giveOneMoreCard.bind(this,this.props.split)}
                 >Hit
                 </Control>
                 {/* {this.props.roundStatus === 'pending' && !this.props.standMode ? 
@@ -91,7 +92,8 @@ const mapDistpatchToProps = dispatch => {
     return {
         giveOneMoreCard : (NumOfsplits) => dispatch(actions.addCard('player',NumOfsplits)),
         toStand : () => dispatch(actions.stand()),
-        doubleBid : () => dispatch(actions.doubleBid())
+        doubleBid : () => dispatch(actions.doubleBid()),
+        splitDecks : (numOfSplits) => dispatch(actions.splitAnotherDeck(numOfSplits))
         
     }
 }

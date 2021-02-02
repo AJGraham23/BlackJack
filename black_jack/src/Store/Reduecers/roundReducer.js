@@ -3,7 +3,7 @@ import * as actionTypes from '../Actions/actionTypes'
 const initState = {
     round:false,
     bid:0,
-    split:false,
+    split:0,
     roundStatus:'',
     // roundResult:'',
     stand:false
@@ -34,6 +34,11 @@ const reduecer = (state = initState, action) => {
             console.log('init game');
             return {
                 ...initState,
+            }
+        case actionTypes.SPLIT_DECK:
+            return {
+                ...state,
+                split:state.split + 1
             }
         default:
             return state;
