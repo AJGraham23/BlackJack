@@ -4,7 +4,24 @@ const initState = {
     dealerCards:[],
     dealerCardsSum:0,
     playerCards:[],
-    playerCardsSum:0,
+    playerCardsSum:[],
+}
+
+// demonstration
+const playerDecks = {
+    playerCards: [
+        [{
+            value:'value',
+            symbol:'synbol',
+            isAce:'true/false'
+        },
+        {   value:'value',
+            symbol:'synbol',
+            isAce:'true/false'
+        }],
+        [],
+        []
+    ]
 }
 
 
@@ -64,29 +81,36 @@ const reduecer = (state = initState, action) => {
                 dealerSum = checkForDifferentSum(action.dealerCards);
             return {...state,
                 dealerCards:action.dealerCards,
-                playerCards:action.playerCards,
-                playerCardsSum:playerSum,
+                playerCards:[...state.playerCards ,action.playerCards],
+                playerCardsSum:[...state.playerCardsSum,playerSum],
                 dealerCardsSum:dealerSum
             }
         case actionTypes.ADD_CARD:
-            // debugger;
+            debugger;
 
             let sum ;
             if(action.card.value > 10 && !action.card.Ace)
-                sum = 10 + (action.holder === 'player' ? state.playerCardsSum : state.dealerCardsSum);
+                sum = 10 + (action.holder === 'player' ? state.playerCardsSum[action.NumOfsplits] : state.dealerCardsSum);
             else
-                sum = action.card.value + (action.holder === 'player' ? state.playerCardsSum : state.dealerCardsSum);
+                sum = action.card.value + (action.holder === 'player' ? state.playerCardsSum[action.NumOfsplits] : state.dealerCardsSum);
             if(sum > 21)
-                sum = checkForDifferentSum([...(action.holder === 'player' ? state.playerCards : state.dealerCards) , action.card]);
+                sum = checkForDifferentSum([...(action.holder === 'player' ? state.playerCards[action.NumOfsplits] : state.dealerCards) , action.card]);
             // if (cardValue > 10)
             //     cardValue = 10;
             // if (cardValue === 1)
             //     cardValue = 11;
             if(action.holder === 'player')
+            {
+                let playerCardsSumArray = state.playerCardsSum.map((value,index)=>{
+                    if(index === action.NumOfsplits)
+                        return sum;
+                    else return value;
+                })
                 return {...state,
-                playerCards:[...state.playerCards,action.card],
-                playerCardsSum:sum,
+                playerCards:[...state.playerCards[action.NumOfsplits],action.card],
+                playerCardsSum:playerCardsSumArray
                 }
+            }
             else return {
                 ...state,
                     dealerCards:[...state.dealerCards,action.card],
@@ -102,10 +126,16 @@ const reduecer = (state = initState, action) => {
                 }
             }
             else {
+                let playerCardsSumArray = state.playerCardsSum.map((value,index)=>{
+                    if(index === action.NumOfsplits)
+                        return action.newSum;
+                    else return value;
+                })
                 // let playerDeck = handleAceCard(state.playerCards,action.indexOfCard);
                 return {
                     ...state,
-                    playerCardsSum:action.newSum
+                    // playerCardsSum:action.newSum
+                    playerCardsSum:playerCardsSumArray
                 }
             }
         case actionTypes.INIT_ROUND:

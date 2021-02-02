@@ -2,6 +2,7 @@ import React , {Component, Fragment} from 'react'
 import Card from './Card/Card'
 import classes from './Deck.module.css'
 import uniqueId from 'uniqid'
+import { doubleBid } from '../../../Store/Actions';
 
 class Deck extends Component { 
 

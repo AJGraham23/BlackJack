@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Control from './Control/Control'
 import classes from './Controls.module.css'
 import * as actions from '../../../Store/Actions/index'
+import asyncComponent from '../../../hoc/asyncComponent/asyncComponent'
 import { connect } from 'react-redux'
 
 export class Controls extends Component {
@@ -9,8 +10,12 @@ export class Controls extends Component {
 
     doublingBid = () => {
         this.props.doubleBid();
-        this.props.giveOneMoreCard();
+        this.props.giveOneMoreCard(this.props.split);
         this.props.toStand();
+    }
+
+    componentDidUpdate = () => {
+        this.pizza = 2;
     }
 
 
@@ -23,13 +28,14 @@ export class Controls extends Component {
     }
 
     render() {
-        
+        // debugger;
+        let numOfPlayerCards = this.props.playerCards[this.props.split].length;
         const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode;
         const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode;
         const doubleButtonVisibility = this.props.playerCanDouble && this.props.roundStatus === 'pending'
-        && !this.props.standMode && this.props.numOfPlayerCards === 2;
-        const splitButtonVisibility = this.props.roundStatus === 'pending' && this.props.numOfPlayerCards === 2
-        && !this.props.split && this.canPlayerSplit(this.props.playerCards);
+        && !this.props.standMode && numOfPlayerCards === 2;
+        const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2
+        && !this.props.split && this.canPlayerSplit(this.props.playerCards[this.props.split]);
         return (
             <div className={classes.Controls}>
                 {/* hit */}
@@ -74,19 +80,20 @@ const MapStateToProps = state => {
         split : state.round.split,
         standMode : state.round.stand,
         roundStatus : state.round.roundStatus,
-        numOfPlayerCards : state.cards.playerCards.length,
-        playerCards : state.cards.playerCards
+        // numOfPlayerCards : state.cards.playerCards.length,
+        playerCards : state.cards.playerCards,
+        
 
     }
 }
 
 const mapDistpatchToProps = dispatch => {
     return {
-        giveOneMoreCard : () => dispatch(actions.addCard('player')),
+        giveOneMoreCard : (NumOfsplits) => dispatch(actions.addCard('player',NumOfsplits)),
         toStand : () => dispatch(actions.stand()),
         doubleBid : () => dispatch(actions.doubleBid())
         
     }
 }
 
-export default connect(MapStateToProps,mapDistpatchToProps)(Controls)
+export default connect(MapStateToProps,mapDistpatchToProps)(asyncComponent(Controls))

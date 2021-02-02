@@ -1,4 +1,4 @@
-import Layout from './hoc/layout'
+import Layout from './hoc/layout/layout'
 import Game from './containers/Game/Game'
 import { Route } from 'react-router-dom'
 import Help from './containers/Help/Help';

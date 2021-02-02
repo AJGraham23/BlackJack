@@ -75,7 +75,7 @@ const checkCardsSum = (cards) => {
 
 
 
-export const addCard = (holder) => {
+export const addCard = (holder,NumOfsplits) => {
     return dispatch => {
         // debugger;
 
@@ -92,7 +92,8 @@ export const addCard = (holder) => {
                 {
                     type: actionTypes.ADD_CARD,
                     card,
-                    holder
+                    holder,
+                    NumOfsplits
                 })
         }, 1001);
     }
