@@ -28,7 +28,7 @@ export class Controls extends Component {
     }
 
     render() {
-        // debugger;
+        debugger;
         let numOfPlayerCards = this.props.playerCards[this.props.split].length;
         const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode;
         const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode;
