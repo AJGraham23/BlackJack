@@ -9,13 +9,14 @@ export const startRound = (bid) => {
     }
 }
 
-export const stand = () => {
+export const stand = (numOfSplits) => {
     return dispatch => {
         return setTimeout(() => {
             dispatch(
                 {
                     type:actionTypes.STAND,
-                    stand:true
+                    stand:true,
+                    numOfSplits
                 })
         }, 1001);
     }

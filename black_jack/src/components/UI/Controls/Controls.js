@@ -11,17 +11,18 @@ export class Controls extends Component {
     doublingBid = () => {
         this.props.doubleBid();
         this.props.giveOneMoreCard(this.props.split);
-        this.props.toStand();
+        this.props.toStand(this.props.numOfSplits);
     }
-
+    
     componentDidUpdate = () => {
         this.pizza = 2;
     }
-
-
+    
+    
     playerSpliting = () => {
         console.log('split and may god help us');
-        this.props.splitDecks(this.props.split)
+        this.props.splitDecks(this.props.split);
+        // this.props.giveOneMoreCard(this.props.split);
     }
 
     canPlayerSplit = (cards) => {
@@ -31,10 +32,10 @@ export class Controls extends Component {
     render() {
         // debugger;
         let numOfPlayerCards = this.props.playerCards[this.props.split].length;
-        const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode;
-        const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode;
+        const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.split];
+        const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.split];
         const doubleButtonVisibility = this.props.playerCanDouble && this.props.roundStatus === 'pending'
-        && !this.props.standMode && numOfPlayerCards === 2;
+        && !this.props.standMode[this.props.split] && numOfPlayerCards === 2;
         const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2
         && !this.props.split && this.canPlayerSplit(this.props.playerCards[this.props.split]);
         return (
@@ -50,7 +51,7 @@ export class Controls extends Component {
 
                 {/* Stand */}
                 <Control
-                    clicked={this.props.toStand}
+                    clicked={this.props.toStand.bind(this,this.props.numOfSplits)}
                     visibility={standButtonVisibility ? 'visible':'hidden'}
                 >
                 Stand</Control>

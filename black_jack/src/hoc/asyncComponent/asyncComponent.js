@@ -1,6 +1,6 @@
 // No Props No Mount
 import React from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 function asyncComponent(WrappedComponent) {
   return class extends React.Component {

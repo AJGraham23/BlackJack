@@ -9,38 +9,38 @@ const Game = (props) => {
 
     const gameRefInitMount = useRef(false);
    
-    useEffect(() => {
-        if(props.stand && props.roundStatus === 'decision') 
-        {
+    // useEffect(() => {
+    //     if(props.stand && props.roundStatus === 'decision') 
+    //     {
             
-            console.log(props);
-            if(props.dealerSum > props.playerSum)
-                {
-                    console.log('dealer wins');
-                    props.changeRoundStatus('lost');
-                    props.initRound(props.budget - (+props.roundBid))
-                }
-                else if(props.dealerSum < props.playerSum)
-                {
-                    props.changeRoundStatus('win');
-                    console.log('player wins');
-                    props.initRound(props.budget + (+props.roundBid))
-                }
-                else 
-                {
-                    console.log('Tie');
-                    props.changeRoundStatus('tie');
-                    props.initRound(props.budget)
-                }
+    //         console.log(props);
+    //         if(props.dealerSum > props.playerSum)
+    //             {
+    //                 console.log('dealer wins');
+    //                 props.changeRoundStatus('lost');
+    //                 props.initRound(props.budget - (+props.roundBid))
+    //             }
+    //             else if(props.dealerSum < props.playerSum)
+    //             {
+    //                 props.changeRoundStatus('win');
+    //                 console.log('player wins');
+    //                 props.initRound(props.budget + (+props.roundBid))
+    //             }
+    //             else 
+    //             {
+    //                 console.log('Tie');
+    //                 props.changeRoundStatus('tie');
+    //                 props.initRound(props.budget)
+    //             }
 
-        }
-        else if(props.roundStatus === 'lost' || props.roundStatus==='win')
-        {
-            props.initRound(props.roundStatus === 'lost' ?(+props.budget)-(+props.roundBid) :
-            (+props.roundBid) + (+props.budget))
+    //     }
+    //     else if(props.roundStatus === 'lost' || props.roundStatus==='win')
+    //     {
+    //         props.initRound(props.roundStatus === 'lost' ?(+props.budget)-(+props.roundBid) :
+    //         (+props.roundBid) + (+props.budget))
 
-        }
-    }, [props.roundStatus]); 
+    //     }
+    // }, [props.roundStatus]); 
         
     useEffect(() => {
         // debugger;

@@ -25,7 +25,7 @@ class Player extends Component {
             // props.initRound(props.budget - props.roundBid)
         // console.log('player lost');
         else if (this.props.playerCardsSum === 21)
-            this.props.toStand();
+            this.props.toStand(this.props.numOfSplits);
             // console.log('enable stand mode');
     }
 
@@ -70,9 +70,10 @@ class Player extends Component {
 }
     
 const MapStateToprops = state => {
-        return {
+    return {
         // playRound : state.round.round,
         // bidRound : state.round.bid,
+        numOfSplits : state.round.split,
         playerCards : state.cards.playerCards,
         playerCardsSum : state.cards.playerCardsSum,
 
@@ -81,7 +82,7 @@ const MapStateToprops = state => {
 
 const mapDistpatchToprops = dispatch => {
     return {
-        toStand : () => dispatch(actions.stand()),
+        toStand : (numOfSplits) => dispatch(actions.stand(numOfSplits)),
         roundStatus : (status) => dispatch(actions.roundStatus(status)),
         // updatePlayerDeckSum : (newSum,deckOwner) => dispatch(actions.changeDeckSum(newSum,deckOwner))
     }

@@ -36,6 +36,5 @@ export const splitAnotherDeck = (numOfSplits) => {
     return {
         type:actionTypes.SPLIT_DECK,
         numOfSplits
-
     }
 }

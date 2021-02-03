@@ -1,3 +1,4 @@
+import { stand } from '../Actions'
 import * as actionTypes from '../Actions/actionTypes'
 
 const initState = {
@@ -6,7 +7,7 @@ const initState = {
     split:0,
     roundStatus:'',
     // roundResult:'',
-    stand:false
+    stand:[false]
 }
 
 
@@ -23,10 +24,17 @@ const reduecer = (state = initState, action) => {
             return {...state,bid:action.bid}
         case actionTypes.ROUND_STATUS:
             return {...state,
-                roundStatus:action.status}
+                roundStatus:action.status
+            }
         case actionTypes.STAND:
+            let newStandArray = state.stand.map((standStatus,index)=>{
+                if(index === action.numOfSplits)
+                    return true
+                else return standStatus
+            });
             return {...state,
-                stand:true}
+                stand:newStandArray
+            }
         case actionTypes.DOUBLE_BID:
             return {...state,
                 bid:state.bid*2}
@@ -36,10 +44,12 @@ const reduecer = (state = initState, action) => {
                 ...initState,
             }
         case actionTypes.SPLIT_DECK:
+            // debugger;
             return {
                 ...state,
                 split:state.split + 1,
-                bid:state.bid*2
+                bid:state.bid*2,
+                stand:state.stand.concat(false)
             }
         default:
             return state;

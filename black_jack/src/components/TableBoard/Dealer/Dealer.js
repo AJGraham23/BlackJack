@@ -12,10 +12,18 @@ export class Dealer extends Component {
     //     sum:0,
     //     round:this.props.round
     // }
+    checkIfallPlayersDeckAreDone = (standArray) => {
+        for (const stand of standArray) {
+            if(!stand)
+                return false
+        }
+
+        return true
+    }
   
     componentDidUpdate = () => {
         // debugger;
-        if(this.props.stand)
+        if(this.checkIfallPlayersDeckAreDone(this.props.stand))
         {
             switch (true) {
                 case this.props.dealerCardsSum > 21:
