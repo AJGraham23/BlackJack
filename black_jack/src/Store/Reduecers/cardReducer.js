@@ -142,25 +142,21 @@ const reduecer = (state = initState, action) => {
                 ...initState
             }
         case actionTypes.SPLIT_DECK:
-
             debugger;
-
-            let cardToSplit;
+            // set new card decks for the player after the split
             let firstSplitedCard = state.playerCards[action.numOfSplits][0] 
-            let secondSplitedCard = state.playerCards[action.numOfSplits][1] 
+            let secondSplitedCard = [];
+             secondSplitedCard.push( state.playerCards[action.numOfSplits][1]) 
             let newPlayerCards = state.playerCards.map((deck,deckIndex)=>{
                 if(deckIndex === action.numOfSplits)
-                {
-                    cardToSplit = deck[1];
-                    return deck[deckIndex];
-                }
+                    return [firstSplitedCard];
                 else return deck[deckIndex];
             } ) ;
-            newPlayerCards = state.playerCards.concat([secondSplitedCard]);
-            // newPlayerCards = newPlayerCards[action.numOfSplits].slice(0,1);
-            let newPlayerSumCards = state.playerCardsSum.concat(state.sum[action.numOfSplits]/2);
+            newPlayerCards = newPlayerCards.concat([secondSplitedCard]);
+            // set new card decks summary array   
+            let newPlayerSumCards = state.playerCardsSum.concat(state.playerCardsSum[action.numOfSplits]/2);
             newPlayerSumCards = newPlayerSumCards.map((el,index) => {
-                if(index === action.numOfsplits)
+                if(index === action.numOfSplits)
                     return el/2
                 else return el;
             })

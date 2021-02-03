@@ -38,7 +38,8 @@ const reduecer = (state = initState, action) => {
         case actionTypes.SPLIT_DECK:
             return {
                 ...state,
-                split:state.split + 1
+                split:state.split + 1,
+                bid:state.bid*2
             }
         default:
             return state;
