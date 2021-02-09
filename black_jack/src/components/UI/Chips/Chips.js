@@ -15,7 +15,7 @@ function Chips(props) {
 
 const MapStateToProps = state => {
     return {
-        roundBid:state.round.bid
+        roundBid:state.round.bid.reduce((a,b)=>a+b)
     }
 }
 

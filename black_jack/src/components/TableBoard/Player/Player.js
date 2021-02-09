@@ -18,15 +18,20 @@ class Player extends Component {
     //         return false;
     // }
     componentDidUpdate = () => {
-        if(this.props.playerCardsSum > 21) {
-            this.props.roundStatus('lost');
-            
+        // debugger;
+        // cards sum is 21 or over
+        if(this.props.playerCardsSum[this.props.numOfSplits] > 21) {
+            // this.props.roundStatus('lost');
+            // this.props.
+            this.props.changeHandResult('lost');
+            // this.props.toStand(this.props.numOfSplits);
         }
-            // props.initRound(props.budget - props.roundBid)
+        // props.initRound(props.budget - props.roundBid)
         // console.log('player lost');
-        else if (this.props.playerCardsSum === 21)
+        else if (this.props.playerCardsSum[this.props.numOfSplits] === 21) {
+            console.log('enable stand mode');
             this.props.toStand(this.props.numOfSplits);
-            // console.log('enable stand mode');
+        }
     }
 
     render() {
@@ -83,7 +88,8 @@ const MapStateToprops = state => {
 const mapDistpatchToprops = dispatch => {
     return {
         toStand : (numOfSplits) => dispatch(actions.stand(numOfSplits)),
-        roundStatus : (status) => dispatch(actions.roundStatus(status)),
+        // roundStatus : (status) => dispatch(actions.roundStatus(status)),
+        changeHandResult : (result) => dispatch(actions.changeHandResult(result))
         // updatePlayerDeckSum : (newSum,deckOwner) => dispatch(actions.changeDeckSum(newSum,deckOwner))
     }
 }

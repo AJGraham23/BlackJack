@@ -12,14 +12,18 @@ const reduecer = (state = initState, action) => {
                 return {...state, isPlaying:true}
         case actionTypes.CHANGE_BUDGET:
                 return {...state, budget:state.budget - action.bid}
+        case actionTypes.COLLECT_PROFITS:
+            // debugger;
+                // if(action.profit)
+                    return {...state, budget:state.budget + action.profit}
         case actionTypes.INIT_ROUND:
             console.log('init game');
-
-            let lost = action.newBudget === 0;
-
+            // debugger;
+            // let newBudget = action.totalProfit + state.budget;
+            let lost = state.budget === 0;
             return {
                 ...state,
-                budget:action.newBudget,
+                // budget:newBudget,
                 lost:lost
             }
         default:

@@ -82,7 +82,11 @@ export const addCard = (holder,NumOfsplits) => {
 
         return setTimeout(() => {
             let card = GenerateRandomCard();
-            
+            card={
+                value:7,
+                symbol:'club',
+                Ace: false
+            };
             // if (card.value > 10)
             //     card.value = 10;
             if(card.Ace)

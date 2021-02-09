@@ -9,7 +9,7 @@ class Deck extends Component {
 
 
    render() {
-
+        debugger;
        let cards = 'waiting for a bid';
        if(this.props.deckCards)
        {

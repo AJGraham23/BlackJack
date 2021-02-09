@@ -9,14 +9,25 @@ export class Controls extends Component {
 
 
     doublingBid = () => {
-        this.props.doubleBid();
+        this.props.doubleBid(this.props.split);
         this.props.giveOneMoreCard(this.props.split);
-        this.props.toStand(this.props.numOfSplits);
+        this.props.toStand(this.props.split);
     }
     
     componentDidUpdate = () => {
-        this.pizza = 2;
+        // this.pizza = 2;
+        // debugger;
+        if(this.props.playerCards[this.props.split].length < 2 && this.props.roundStatus === 'pending')
+            this.props.giveOneMoreCard(this.props.split);
+
     }
+
+    playerCanDouble = () => {
+        let totalBidsSum = this.props.bid.reduce((a,b)=>a+b)    
+        return  this.props.budget -totalBidsSum - this.props.bid[this.props.split] > -0.1 
+        ? true : false;
+    }
+
     
     
     playerSpliting = () => {
@@ -25,19 +36,20 @@ export class Controls extends Component {
         // this.props.giveOneMoreCard(this.props.split);
     }
 
-    canPlayerSplit = (cards) => {
+    areCardsEqual = (cards) => {
         return cards[0].value === cards[1].value;
     }
 
     render() {
+        console.count();
         // debugger;
         let numOfPlayerCards = this.props.playerCards[this.props.split].length;
         const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.split];
         const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.split];
-        const doubleButtonVisibility = this.props.playerCanDouble && this.props.roundStatus === 'pending'
+        const doubleButtonVisibility = this.playerCanDouble() && this.props.roundStatus === 'pending'
         && !this.props.standMode[this.props.split] && numOfPlayerCards === 2;
         const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2
-        && !this.props.split && this.canPlayerSplit(this.props.playerCards[this.props.split]);
+        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.split]);
         return (
             <div className={classes.Controls}>
                 {/* hit */}
@@ -51,7 +63,7 @@ export class Controls extends Component {
 
                 {/* Stand */}
                 <Control
-                    clicked={this.props.toStand.bind(this,this.props.numOfSplits)}
+                    clicked={this.props.toStand.bind(this,this.props.split)}
                     visibility={standButtonVisibility ? 'visible':'hidden'}
                 >
                 Stand</Control>
@@ -78,8 +90,10 @@ export class Controls extends Component {
 
 const MapStateToProps = state => {
     return {
-        playerCanDouble : state.game.budget - state.round.bid*2 > -0.1 ? true : false,
+        // playerCanDouble : state.game.budget - state.round.bid[state.round.split]*2 > -0.1 ? true : false,
         split : state.round.split,
+        bid : state.round.bid,
+        budget : state.game.budget,
         standMode : state.round.stand,
         roundStatus : state.round.roundStatus,
         // numOfPlayerCards : state.cards.playerCards.length,
@@ -92,8 +106,8 @@ const MapStateToProps = state => {
 const mapDistpatchToProps = dispatch => {
     return {
         giveOneMoreCard : (NumOfsplits) => dispatch(actions.addCard('player',NumOfsplits)),
-        toStand : () => dispatch(actions.stand()),
-        doubleBid : () => dispatch(actions.doubleBid()),
+        toStand : (NumOfsplits) => dispatch(actions.stand(NumOfsplits)),
+        doubleBid : (numOfSplits) => dispatch(actions.doubleBid(numOfSplits)),
         splitDecks : (numOfSplits) => dispatch(actions.splitAnotherDeck(numOfSplits))
         
     }

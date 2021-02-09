@@ -38,14 +38,20 @@ export class Money extends Component {
     }
 
     render() {
-        if(this.props.roundbid)
-            this.bidInputValue = this.props.roundbid;
+        // calc budget left 
+        let totalBids = +this.props.roundbid.reduce((a,b)=> a+b,0);
+        
+        if(this.props.roundbid[0])
+            this.bidInputValue = this.props.roundbid[0];
         else this.bidInputValue = this.state.lastRoundBid;
         return (
             <div className={classes.Money}>
                 <div className={classes.budget}>
                    budget: <div>
-                        {this.props.round ? this.props.playerBadget -this.props.roundbid  : this.props.playerBadget}$
+                        {this.props.round 
+                        // ? this.props.playerBadget -this.props.roundbid  
+                        ? this.props.playerBadget- totalBids  
+                        : this.props.playerBadget }$
                        </div>
                 </div>
                 {
@@ -62,7 +68,7 @@ export class Money extends Component {
                         // value={this.state.bidOffer}
                         className={classes.bidAmountInput}
                         onChange={e => this.inputEventHandler(e)}
-                        placeholder={this.props.roundbid > 0 ? this.props.roundbid : 'bid amount'}
+                        placeholder={this.props.roundbid[0] > 0 ? this.props.roundbid[0] : 'bid amount'}
                         // value={this.bidInputValue}
                         max={this.props.playerBadget}></input>
                     <input className={classes.submitBet} disabled={this.props.round}  type="submit" value="deal"></input>
@@ -86,7 +92,7 @@ const MapStateToProps = state => {
 const mapDistpatchToProps = dispatch => {
     return {
         startRound : (bid) => dispatch(actions.startRound(bid)),
-        makeBid : (bid) => dispatch(actions.makeBid(bid)),
+        // makeBid : (bid) => dispatch(actions.makeBid(bid)),
         devideCards : () => dispatch(actions.devideCardForRoundStart())
     }
 }

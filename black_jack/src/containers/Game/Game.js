@@ -8,54 +8,82 @@ import * as actions from '../../Store/Actions/index'
 const Game = (props) => {
 
     const gameRefInitMount = useRef(false);
-   
-    // useEffect(() => {
-    //     if(props.stand && props.roundStatus === 'decision') 
-    //     {
-            
-    //         console.log(props);
-    //         if(props.dealerSum > props.playerSum)
-    //             {
-    //                 console.log('dealer wins');
-    //                 props.changeRoundStatus('lost');
-    //                 props.initRound(props.budget - (+props.roundBid))
-    //             }
-    //             else if(props.dealerSum < props.playerSum)
-    //             {
-    //                 props.changeRoundStatus('win');
-    //                 console.log('player wins');
-    //                 props.initRound(props.budget + (+props.roundBid))
-    //             }
-    //             else 
-    //             {
-    //                 console.log('Tie');
-    //                 props.changeRoundStatus('tie');
-    //                 props.initRound(props.budget)
-    //             }
-
-    //     }
-    //     else if(props.roundStatus === 'lost' || props.roundStatus==='win')
-    //     {
-    //         props.initRound(props.roundStatus === 'lost' ?(+props.budget)-(+props.roundBid) :
-    //         (+props.roundBid) + (+props.budget))
-
-    //     }
-    // }, [props.roundStatus]); 
-        
+    // let playerFinishedHisHands = props.stand.find(standValue => standValue === false)
     useEffect(() => {
-        // debugger;
-        // debugger;
+        if( props.roundStatus === 'decision') 
+        {
+            console.log('we made it to the desicions phase!')
+            let playerResults = [];
+            let totalProfit = 0;
+            for (const index in props.playerSum) {
+                if (props.playerSum[+index] < 22)
+                {
+                    switch (true) {
+                        case props.playerSum[+index] - props.dealerSum > 0:
+                            playerResults.push('win');
+                            totalProfit+= props.roundBids[index]*2;
+                            props.collectProfit(props.roundBids[+index]*2)
+                            break;
+                            case props.playerSum[+index] - props.dealerSum === 0:
+                                totalProfit+= props.roundBids[index];
+                                playerResults.push('tie');
+                                props.collectProfit(props.roundBids[+index])
+
+                            break;
+                        case props.playerSum[+index] - props.dealerSum < 0:
+                            playerResults.push('lost');
+                            totalProfit-= props.roundBids[index];
+                            props.collectProfit(-props.roundBids[+index])
+                            break;
+
+                        default:
+                            alert('something went wrong is [game.js] desicion');
+                            break;
+                    }   
+                }
+                else
+                {
+                    playerResults.push('lost');
+                    totalProfit-= props.roundBids[index];
+                    props.collectProfit(-props.roundBids[+index])
+                }
+            }
+            props.initRound();
+        }
+    }, [props.roundStatus]); 
+    
+    useEffect(() => {
+        if( props.dealerBust) 
+        {
+            console.log('we made it to the dealerBust phase!')
+            let totalProfit = 0;
+            for (const index in props.playerSum) {
+                if (props.playerSum[+index] < 22)
+                {
+                    totalProfit+= props.roundBids[index]*2;   
+                    props.collectProfit(props.roundBids[+index]*2) 
+                }
+                else console.log('hand ' + (+index) + 'lost');
+                    totalProfit-= props.roundBids[index]*2;   
+                    props.collectProfit(-props.roundBids[+index]) 
+            }
+            props.initRound();
+        }
+    }, [props.dealerBust]); 
+    
+    useEffect(() => {
+        
         if(gameRefInitMount.current) {
             console.log('rendering Game from use effect');
             console.log(props);
             if(!props.dealerCards.length && props.roundStatus === 'pending')
-                {
-                    // debugger;
-                    props.devideStartingCards();
-                }
+            {
+                // debugger;
+                props.devideStartingCards();
+            }
         }
         
-
+        
         else {
             gameRefInitMount.current = true
         }
@@ -83,6 +111,8 @@ const Game = (props) => {
     {
         finalResualt = props.roundStatus;
     }
+
+    console.log(props.allStand)
     return ( 
         // new Promise((res,rej)=> {
 
@@ -117,12 +147,15 @@ const MapStateToProps = state => {
       dealerCards:state.cards.dealerCards,
       playerCards:state.cards.playerCards,
       roundStatus:state.round.roundStatus,
-      roundBid:state.round.bid,
+      roundBids:state.round.bid,
       budget:state.game.budget,
       dealerSum:state.cards.dealerCardsSum,
       playerSum:state.cards.playerCardsSum,
       stand:state.round.stand,
-      roundStarted:state.round.round
+      allStand:state.round.stand.find(el=> el === false),
+    //   numOfSplits:state.round.split,
+      roundStarted:state.round.round,
+      dealerBust:state.round.dealerBust
     }
 }
 
@@ -130,8 +163,10 @@ const mapDistpatchToProps = dispatch => {
     return {
         // startGame : () => dispatch(actions.startGame()),
         changeRoundStatus : (status) => dispatch(actions.roundStatus(status)),
-        initRound : (newBudget) => dispatch(actions.initRound(newBudget)),
-        devideStartingCards : () => dispatch(actions.devideCardForRoundStart())
+        initRound : (totalProfit) => dispatch(actions.initRound(totalProfit)),
+        hitOneMoreCard : (newBudget) => dispatch(actions.initRound(newBudget)),
+        devideStartingCards : () => dispatch(actions.devideCardForRoundStart()),
+        collectProfit : (profit) => dispatch(actions.collectProfits(profit))
         
     }
 }

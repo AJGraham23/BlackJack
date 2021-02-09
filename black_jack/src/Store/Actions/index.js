@@ -2,12 +2,15 @@ import * as actionTypes from "./actionTypes";
 
 export {
     startGame,
-    changeBudget
+    changeBudget,
+    collectProfits
 } from './gameAction';
 
 export {
     startRound,
-    makeBid,
+    // makeBid,
+    dealerBust,
+    changeHandResult,
     roundStatus,
     stand,
     doubleBid
@@ -19,13 +22,13 @@ export {
     changeDeckSum
 } from './cardAction';
 
-export const initRound = (newBudget) => {
+export const initRound = (totalProfit) => {
     return dispatch => {
         return setTimeout(() => {
             dispatch(
                 {
                     type:actionTypes.INIT_ROUND,
-                    newBudget
+                    totalProfit
                 })
         }, 2001);
     }
@@ -33,8 +36,17 @@ export const initRound = (newBudget) => {
 
 
 export const splitAnotherDeck = (numOfSplits) => {
-    return {
-        type:actionTypes.SPLIT_DECK,
-        numOfSplits
+    return dispatch => {
+        return setTimeout(() => {
+            dispatch( {
+                type:actionTypes.SPLIT_DECK,
+                numOfSplits
+            })
+        }, 2);
+        // return dispatch( {
+        //     type:actionTypes.SPLIT_DECK,
+        //     numOfSplits
+        // })
     }
+ 
 }

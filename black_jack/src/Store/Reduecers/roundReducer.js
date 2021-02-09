@@ -3,53 +3,129 @@ import * as actionTypes from '../Actions/actionTypes'
 
 const initState = {
     round:false,
-    bid:0,
+    bid:[0],
     split:0,
     roundStatus:'',
-    // roundResult:'',
-    stand:[false]
+    handsResult:[''],
+    stand:[false],
+    dealerBust:false
+}
+
+const updateHandsResults = (handsResultArray) => {
+
 }
 
 
 const reduecer = (state = initState, action) => {
+
     switch (action.type) {
         case actionTypes.START_ROUND:
             return {
                 ...state,
                 round:true,
                 roundStatus:'pending',
-                bid:action.bid
+                bid:[+action.bid]
             }
-        case actionTypes.MAKE_BID:
-            return {...state,bid:action.bid}
+
+        // case actionTypes.MAKE_BID:
+        //     return {...state,bid:action.bid}
+
+
         case actionTypes.ROUND_STATUS:
             return {...state,
                 roundStatus:action.status
             }
+
+        case actionTypes.DOUBLE_BID:
+            let newBidArray = state.bid.map((bidAmount,index)=>{
+                if(index === action.numOfSplits)
+                    return bidAmount*2
+                else return bidAmount
+            });
+            return {...state,
+                bid:newBidArray}
+        case actionTypes.INIT_ROUND:
+            console.log('init game');
+            return {
+                ...initState,
+            }
+        
         case actionTypes.STAND:
             let newStandArray = state.stand.map((standStatus,index)=>{
                 if(index === action.numOfSplits)
                     return true
                 else return standStatus
             });
+            let newSplit = state.split;
+            if(newSplit)
+            newSplit = state.split - 1;
+            
+            // isPlayingHandExist = false;
+            let updatedHandsResult = state.handsResult.map((result,index)=> {
+                // if(result === '' && index !== state.split) 
+                //     isPlayingHandExist = true;
+                if(index === state.split)
+                    return 'decision';
+                else return result;
+            })
+            
             return {...state,
-                stand:newStandArray
+                stand:newStandArray,
+                split:newSplit,
+                handsResult:updatedHandsResult,    
             }
-        case actionTypes.DOUBLE_BID:
-            return {...state,
-                bid:state.bid*2}
-        case actionTypes.INIT_ROUND:
-            console.log('init game');
+            // if(isPlayingHandExist)
+            // else 
+            //     return {
+            //         ...state,
+            //         stand:newStandArray,
+            //         split:newSplit,
+            //         handsResult:updatedHandsResult,
+            //         // roundStatus:'decision'
+            //     }
+        
+        case actionTypes.CHANGE_HAND_RESULT:
+            // console.log('init game');
+            // decrease the split value if it's more than 0
+            let newSplitValue = state.split;
+            if(newSplitValue)
+            newSplitValue = state.split - 1;
+
+            // isPlayingHandExist = false;
+            let newHandsResult = state.handsResult.map((result,index)=> {
+                // if(result === '' && index !== state.split)
+                //     isPlayingHandExist = true;
+                if(index === state.split)
+                    return action.result;
+                else return result;
+            })
             return {
-                ...initState,
+                ...state,
+                handsResult: newHandsResult,
+                split:newSplitValue
             }
+            // if(isPlayingHandExist)
+            // else
+            //     return {
+            //         ...state,
+            //         handsResult: newHandsResult,
+            //         // roundStatus:'desicion',
+            //         split:newSplitValue
+            //     }
         case actionTypes.SPLIT_DECK:
             // debugger;
             return {
                 ...state,
                 split:state.split + 1,
-                bid:state.bid*2,
-                stand:state.stand.concat(false)
+                bid:state.bid.concat(+state.bid[0]),
+                stand:state.stand.concat(false),
+                handsResult: [...state.handsResult,'']
+
+            }
+        case actionTypes.DEALER_BUST:
+            return {
+                ...state,
+                dealerBust:true
             }
         default:
             return state;

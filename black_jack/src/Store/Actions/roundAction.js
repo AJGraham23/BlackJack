@@ -22,12 +22,12 @@ export const stand = (numOfSplits) => {
     }
 }
 
-export const makeBid = bid => {
-    return {
-        type:actionTypes.MAKE_BID,
-        bid
-    }
-}
+// export const makeBid = bid => {
+//     return {
+//         type:actionTypes.MAKE_BID,
+//         bid
+//     }
+// }
 
 export const roundStatus = (status) => {
     return {
@@ -36,12 +36,25 @@ export const roundStatus = (status) => {
     }
 }
 
-export const doubleBid = () => {
+export const doubleBid = (numOfSplits) => {
     return {
-        type:actionTypes.DOUBLE_BID
+        type:actionTypes.DOUBLE_BID,
+        numOfSplits
     }
 }
 
+export const changeHandResult = (result) => {
+    return {
+        type: actionTypes.CHANGE_HAND_RESULT,
+        result
+    }
+}
+
+export const dealerBust = () => {
+    return {
+        type:actionTypes.DEALER_BUST
+    }
+}
 // export const splitAnotherDeck = () => {
 //     return {
 //         type:actionTypes.SPLIT_DECK

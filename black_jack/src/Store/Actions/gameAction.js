@@ -19,6 +19,12 @@ export const startGameNow = () => {
     }
 }
 
+export const collectProfits = (profit) => {
+    return {
+        type:actionTypes.COLLECT_PROFITS,
+        profit
+    }
+}
 
 
 export const changeBudget = (lastBidSum )=> {
