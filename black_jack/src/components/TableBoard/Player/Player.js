@@ -36,13 +36,17 @@ class Player extends Component {
 
     render() {
         let renderCardDecks = this.props.playerCards.map((deck,deckIndex)=> {
-        return  <Deck
-                    key={`deckNumber${deckIndex}`}
-                    deckCards = {deck}
-                    deckSum = {this.props.playerCardsSum[deckIndex]}
-                    player
-                >
-                </Deck>
+        return  <div key={`deckContainerNumber${deckIndex}`}
+                 className={(deckIndex === this.props.numOfSplits ? classes.activeDeck: classes.disableDeck)}>
+                    <Deck
+                        key={`deckNumber${deckIndex}`}
+                        deckCards = {deck}
+                        deckSum = {this.props.playerCardsSum[deckIndex]}
+                        player
+                        playedHand = {deckIndex === this.props.numOfSplits}
+                        >
+                    </Deck>
+                </div>
         });
         // debugger;
         // let sum = props.playerCardsSum;
@@ -50,18 +54,36 @@ class Player extends Component {
         return (
             <div className={classes.Player}>
                 
-                <div className={classes.Deck}>
-                    <h2>Player's hand</h2>
+                <h2>Player's hand</h2>
+                <div className={classes.Decks}>
                     {this.props.playerCards.length?
-                    // <Deck
-                    //     deckCards = {this.props.playerCards}
-                    //     deckSum = {this.props.playerCardsSum}
-                    //     player
-                    // >
-                    // </Deck> 
                     renderCardDecks
                     :'' }
-                   
+                    {/* <Deck
+                        deckCards = {this.props.playerCards}
+                        deckSum = {this.props.playerCardsSum}
+                        player
+                    >
+                    </Deck>
+                    <Deck
+                        deckCards = {this.props.playerCards}
+                        deckSum = {this.props.playerCardsSum}
+                        player
+                    >
+                    </Deck>
+                    <Deck
+                        deckCards = {this.props.playerCards}
+                        deckSum = {this.props.playerCardsSum}
+                        player
+                    >
+                    </Deck>
+                    <Deck
+                        deckCards = {this.props.playerCards}
+                        deckSum = {this.props.playerCardsSum}
+                        player
+                    >
+                    </Deck>
+                    */}
                     {/* {props.playerCards
                     ?<h3 className={classes.amount}>bid amount is:<br></br>{props.bidRound + '$'}</h3>
                     : ''

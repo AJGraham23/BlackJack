@@ -142,7 +142,6 @@ const reduecer = (state = initState, action) => {
                 ...initState
             }
         case actionTypes.SPLIT_DECK:
-            debugger;
             // set new card decks for the player after the split
             let firstSplitedCard = state.playerCards[action.numOfSplits][0] 
             let secondSplitedCard = [];

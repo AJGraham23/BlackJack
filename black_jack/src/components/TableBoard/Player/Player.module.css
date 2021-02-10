@@ -1,6 +1,7 @@
 .Player {
     margin: 0 auto;
     align-items: center;
+    /* background-color: blue; */
     display: flex;
     border: 1px ridge purple;
     margin: 0 auto;
@@ -15,29 +16,57 @@
     /* margin-left: 50px; */
 }
 
-
+h2{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    margin-top: 15px;
+}
 .Player > div {
     margin: 10px;
     text-align: center;
 
 }
 
-.Deck{
+.Decks{
     height: 100%;
     display: flex;
     border: 1px ridge black;
     margin: auto;
-    align-self: center;
-    flex-direction: column;
-    
+    /* align-self: center; */
+    /* flex-direction: column; */
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
-
+.Deck:first-child {
+    width: 100%;
+}
 .amount {
     /* position: absolute; */
 }
 
+.activeDeck {
+    width: 100%;
+    order: 1;
+    /* background-color: blue; */
+    padding: 10px;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+        1 1.3px 2.2px rgb(11, 85, 21),
+        2 2.3px 5.2px rgb(19, 87, 25);
+    
+    
+}
 
+.activeDeck:first-child {
+}
+
+.disableDeck {
+    width: initial;
+    order: 2;
+}
 /* 
 .Money {
     flex-basis: 25%;

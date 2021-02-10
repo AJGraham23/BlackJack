@@ -9,7 +9,6 @@ class Deck extends Component {
 
 
    render() {
-        debugger;
        let cards = 'waiting for a bid';
        if(this.props.deckCards)
        {
@@ -20,18 +19,23 @@ class Deck extends Component {
                 symbol={card.symbol}
                 isAce={card.Ace}
                 key={uniqueId(`card${index}-`)}
+                markCard = {this.props.playedHand === true}
                 >
             </Card> 
             })
         }
+        let CardsClass = this.props.playedHand ? classes.activeDeck : classes.disActiveDeck;
+        // CardClass = '';
         return (
             
-            <div classes={classes.Deck}>
+            <div classes={classes.Decks}>
                 <div className={classes.Cards}>
-                    <Fragment>
-                        {cards}
-                    </Fragment>
-                </div>
+                    <div className={classes.alignCards + ' ' + CardsClass}>
+                        {/* <Fragment> */}
+                            {cards}
+                        {/* </Fragment> */}
+                    </div>
+                     </div>
                 <p>sum:{this.props.deckSum}</p>
             </div>
         )

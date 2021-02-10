@@ -52,3 +52,22 @@
     background-color: tomato;
     z-index: 2;
 }
+
+
+
+.active {
+    width: 100%;
+    order: 1;
+    box-shadow:inset 1px 2px 1px 0.1px grey,
+     rgba(208, 211, 208, 0.56) 0px 25px 70px 4px;
+    padding: 8px 9px ;
+    
+}
+
+.disActive {
+    padding: initial;
+    box-shadow: inset 1px 2px 1px 0.1px grey;
+    background-color: rgb(241, 237, 237);
+    width: 35px;
+    height: 60px;
+}

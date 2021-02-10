@@ -51,9 +51,9 @@ function Card(props) {
 
     
     let CardClass = `${classes.Card} ${props.Hiden ? classes.Hiden : ''}`
-
+    let cardActiveClass = `${props.markCard ? classes.active:classes.disActive}`;
     return (
-        <div className={CardClass + ' ' + props.newLine} style={{'color':colour}}>
+        <div className={CardClass + ' ' + props.newLine + ' ' + cardActiveClass} style={{'color':colour}}>
             <div className={classes.Value } >
                 <span style={{'display':`${props.Hiden ? 'none' : true}`}}>
                     {cardNumber}
