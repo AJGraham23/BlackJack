@@ -3,12 +3,13 @@ import * as actionTypes from '../Actions/actionTypes'
 
 const initState = {
     round:false,
-    bid:[0],
     split:0,
     roundStatus:'',
     handsResult:[''],
     stand:[false],
-    dealerBust:false
+    dealerBust:false,
+    bid:[0],
+    originalBid:0
 }
 
 const updateHandsResults = (handsResultArray) => {
@@ -24,12 +25,9 @@ const reduecer = (state = initState, action) => {
                 ...state,
                 round:true,
                 roundStatus:'pending',
-                bid:[+action.bid]
+                bid:[+action.bid],
+                originalBid:+action.bid
             }
-
-        // case actionTypes.MAKE_BID:
-        //     return {...state,bid:action.bid}
-
 
         case actionTypes.ROUND_STATUS:
             return {...state,
@@ -37,11 +35,15 @@ const reduecer = (state = initState, action) => {
             }
 
         case actionTypes.DOUBLE_BID:
+            // debugger;
+
             let newBidArray = state.bid.map((bidAmount,index)=>{
                 if(index === action.numOfSplits)
                     return bidAmount*2
                 else return bidAmount
             });
+
+            
             return {...state,
                 bid:newBidArray}
         case actionTypes.INIT_ROUND:
@@ -52,7 +54,7 @@ const reduecer = (state = initState, action) => {
         
         case actionTypes.STAND:
             let newStandArray = state.stand.map((standStatus,index)=>{
-                if(index === action.numOfSplits)
+                if(index === action.activeDeckIndex)
                     return true
                 else return standStatus
             });
@@ -64,7 +66,8 @@ const reduecer = (state = initState, action) => {
             let updatedHandsResult = state.handsResult.map((result,index)=> {
                 // if(result === '' && index !== state.split) 
                 //     isPlayingHandExist = true;
-                if(index === state.split)
+                // if(index === state.split)
+                if(index === action.activeDeckIndex)
                     return 'decision';
                 else return result;
             })
@@ -116,8 +119,8 @@ const reduecer = (state = initState, action) => {
             // debugger;
             return {
                 ...state,
-                split:state.split + 1,
-                bid:state.bid.concat(+state.bid[0]),
+                split:action.numOfSplits,
+                bid:state.bid.concat(+state.originalBid),
                 stand:state.stand.concat(false),
                 handsResult: [...state.handsResult,'']
 

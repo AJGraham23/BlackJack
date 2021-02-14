@@ -19,8 +19,17 @@ class Player extends Component {
     // }
     componentDidUpdate = () => {
         // debugger;
+        // debugger;
+        if(this.props.playerCards.length)
+        {
+            if(this.props.playerCards[this.props.activeDeckNumber].length < 2 && this.props.roundStatus === 'pending')
+            {
+                    let what = 'wtf';
+                    this.props.giveOneMoreCard(this.props.activeDeckNumber);
+            }
+        }
         // cards sum is 21 or over
-        if(this.props.playerCardsSum[this.props.numOfSplits] > 21) {
+        if(this.props.playerCardsSum[this.props.activeDeckNumber] > 21) {
             // this.props.roundStatus('lost');
             // this.props.
             this.props.changeHandResult('lost');
@@ -28,22 +37,26 @@ class Player extends Component {
         }
         // props.initRound(props.budget - props.roundBid)
         // console.log('player lost');
-        else if (this.props.playerCardsSum[this.props.numOfSplits] === 21) {
+        else if (this.props.playerCardsSum[this.props.activeDeckNumber] === 21
+            && !this.props.playerCards[this.props.activeDeckNumber].deckFinished) {
             console.log('enable stand mode');
-            this.props.toStand(this.props.numOfSplits);
+            this.props.toStand(this.props.activeDeckNumber);
+            this.props.markDeckAsFinished(this.props.activeDeckNumber);
+            
         }
     }
 
     render() {
         let renderCardDecks = this.props.playerCards.map((deck,deckIndex)=> {
         return  <div key={`deckContainerNumber${deckIndex}`}
-                 className={(deckIndex === this.props.numOfSplits ? classes.activeDeck: classes.disableDeck)}>
+                 className={(deckIndex === this.props.activeDeckNumber ? classes.activeDeck: classes.disableDeck)}>
                     <Deck
                         key={`deckNumber${deckIndex}`}
                         deckCards = {deck}
                         deckSum = {this.props.playerCardsSum[deckIndex]}
                         player
-                        playedHand = {deckIndex === this.props.numOfSplits}
+                        deckNumber = {deckIndex}
+                        playedHand = {deckIndex === this.props.activeDeckNumber}
                         >
                     </Deck>
                 </div>
@@ -100,7 +113,9 @@ const MapStateToprops = state => {
     return {
         // playRound : state.round.round,
         // bidRound : state.round.bid,
-        numOfSplits : state.round.split,
+        roundStatus : state.round.roundStatus,
+        // numOfSplits : state.round.split,
+        activeDeckNumber : state.cards.activeDeckNumber,
         playerCards : state.cards.playerCards,
         playerCardsSum : state.cards.playerCardsSum,
 
@@ -109,10 +124,13 @@ const MapStateToprops = state => {
 
 const mapDistpatchToprops = dispatch => {
     return {
-        toStand : (numOfSplits) => dispatch(actions.stand(numOfSplits)),
+        toStand : (activeDeckNumber) => dispatch(actions.stand(activeDeckNumber)),
+        markDeckAsFinished : (activeDeckNumber) => dispatch(actions.markDeckAsFinished(activeDeckNumber)),
         // roundStatus : (status) => dispatch(actions.roundStatus(status)),
-        changeHandResult : (result) => dispatch(actions.changeHandResult(result))
+        changeHandResult : (result) => dispatch(actions.changeHandResult(result)),
         // updatePlayerDeckSum : (newSum,deckOwner) => dispatch(actions.changeDeckSum(newSum,deckOwner))
+        giveOneMoreCard : (activeDeckNumber) => dispatch(actions.addCard('player',activeDeckNumber))
+
     }
 }
 

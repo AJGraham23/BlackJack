@@ -21,23 +21,22 @@ const Game = (props) => {
                     switch (true) {
                         case props.playerSum[+index] - props.dealerSum > 0:
                             playerResults.push('win');
-                            totalProfit+= props.roundBids[index]*2;
-                            props.collectProfit(props.roundBids[+index]*2)
-                            break;
-                            case props.playerSum[+index] - props.dealerSum === 0:
-                                totalProfit+= props.roundBids[index];
-                                playerResults.push('tie');
-                                props.collectProfit(props.roundBids[+index])
-
-                            break;
+                            totalProfit+= props.roundBids[index];
+                            props.collectProfit(props.roundBids[+index])    
+                        break;
                         case props.playerSum[+index] - props.dealerSum < 0:
                             playerResults.push('lost');
                             totalProfit-= props.roundBids[index];
                             props.collectProfit(-props.roundBids[+index])
-                            break;
+                        break;
+                        case props.playerSum[+index] - props.dealerSum === 0:
+                            totalProfit+= props.roundBids[index];
+                            playerResults.push('tie');
+                            props.collectProfit(0)   
+                        break;
 
                         default:
-                            alert('something went wrong is [game.js] desicion');
+                            alert('something went wrong in [game.js] desicion');
                             break;
                     }   
                 }
@@ -60,11 +59,11 @@ const Game = (props) => {
             for (const index in props.playerSum) {
                 if (props.playerSum[+index] < 22)
                 {
-                    totalProfit+= props.roundBids[index]*2;   
-                    props.collectProfit(props.roundBids[+index]*2) 
+                    totalProfit+= props.roundBids[index];   
+                    props.collectProfit(props.roundBids[+index]) 
                 }
                 else console.log('hand ' + (+index) + 'lost');
-                    totalProfit-= props.roundBids[index]*2;   
+                    totalProfit-= props.roundBids[index];   
                     props.collectProfit(-props.roundBids[+index]) 
             }
             props.initRound();

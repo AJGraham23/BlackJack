@@ -35,7 +35,8 @@ class Deck extends Component {
                             {cards}
                         {/* </Fragment> */}
                     </div>
-                     </div>
+                </div>
+                <span>{this.props.deckNumber}: </span>
                 <p>sum:{this.props.deckSum}</p>
             </div>
         )

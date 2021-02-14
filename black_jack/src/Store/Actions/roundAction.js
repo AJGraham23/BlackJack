@@ -9,16 +9,21 @@ export const startRound = (bid) => {
     }
 }
 
-export const stand = (numOfSplits) => {
+export const stand = (activeDeckIndex) => {
     return dispatch => {
-        return setTimeout(() => {
-            dispatch(
-                {
-                    type:actionTypes.STAND,
-                    stand:true,
-                    numOfSplits
-                })
-        }, 1001);
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                dispatch(
+                    {
+                        type:actionTypes.STAND,
+                        stand:true,
+                        activeDeckIndex
+                    })
+
+                    resolve('stand was triggered on deck '+ activeDeckIndex);
+            }, 101);
+            
+        })
     }
 }
 
@@ -37,9 +42,17 @@ export const roundStatus = (status) => {
 }
 
 export const doubleBid = (numOfSplits) => {
-    return {
-        type:actionTypes.DOUBLE_BID,
-        numOfSplits
+
+    return dispatch=>
+    {
+        return new Promise((resolve, reject) => {
+            
+            dispatch({
+             type:actionTypes.DOUBLE_BID,
+             numOfSplits
+            });
+            resolve('double bid was triggered on deck: '+ numOfSplits);
+        })
     }
 }
 

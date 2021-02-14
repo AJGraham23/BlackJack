@@ -1,4 +1,4 @@
-import React, { Component , Fragment , memo} from 'react'
+import React, { Component , Fragment , memo , Suspense} from 'react'
 import Dealer from './Dealer/Dealer'
 import {connect} from 'react-redux'
 import Player from './Player/Player'
@@ -41,6 +41,7 @@ export class TableBoard extends Component {
        
         let playerStillAlive = (<Fragment>
             <div className={classes.dealerAndPlayer}>     
+                
                 <Dealer></Dealer>
                 <Chips></Chips>
                 <Player></Player>

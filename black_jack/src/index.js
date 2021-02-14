@@ -13,7 +13,8 @@ import roundReduecer from './Store/Reduecers/roundReducer'
 import cardReduecer from './Store/Reduecers/cardReducer'
 
 const composeEnhancers = composeWithDevTools({
-  name:'arik'  
+  name:'arik',
+  trace:true
   // Specify name here, actionsBlacklist, actionsCreators and other options if needed
 });
 

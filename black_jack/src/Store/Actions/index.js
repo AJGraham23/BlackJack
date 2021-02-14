@@ -1,4 +1,7 @@
 import * as actionTypes from "./actionTypes";
+import {doubleBid , stand } from "./roundAction";
+import {addCard,markDeckAsFinished} from "./cardAction";
+
 
 export {
     startGame,
@@ -9,6 +12,7 @@ export {
 export {
     startRound,
     // makeBid,
+
     dealerBust,
     changeHandResult,
     roundStatus,
@@ -19,7 +23,9 @@ export {
 export {
     devideCardForRoundStart,
     addCard,
-    changeDeckSum
+    changeDeckSum,
+    markDeckAsFinished,
+    actionPromise
 } from './cardAction';
 
 export const initRound = (totalProfit) => {
@@ -49,4 +55,28 @@ export const splitAnotherDeck = (numOfSplits) => {
         // })
     }
  
+}
+
+
+export const doubleOperation = (activeDeck) => {
+    return dispatch => {
+        // this.props.doubleBid(this.props.activeDeckNumber);
+        // this.props.giveOneMoreCard(this.props.activeDeckNumber);
+        // this.props.toStand(this.props.activeDeckNumber);
+        // this.props.markDeckAsFinished(this.props.activeDeckNumber);
+        dispatch( doubleBid(activeDeck) )
+        .then(value =>{
+            console.log(value);
+            dispatch(addCard('player',activeDeck)).then(value2=>{
+
+                console.log(value2);
+                dispatch(stand(activeDeck)).then(value3=>{
+                    
+                    console.log(value3);
+                    dispatch(markDeckAsFinished(value3))
+                })
+            });
+        })
+
+    }
 }
