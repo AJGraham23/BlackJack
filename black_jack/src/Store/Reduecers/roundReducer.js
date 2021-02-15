@@ -1,4 +1,3 @@
-import { stand } from '../Actions'
 import * as actionTypes from '../Actions/actionTypes'
 
 const initState = {
@@ -10,10 +9,6 @@ const initState = {
     dealerBust:false,
     bid:[0],
     originalBid:0
-}
-
-const updateHandsResults = (handsResultArray) => {
-
 }
 
 

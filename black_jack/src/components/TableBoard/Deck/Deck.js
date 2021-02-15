@@ -1,8 +1,7 @@
-import React , {Component, Fragment} from 'react'
+import React , {Component} from 'react'
 import Card from './Card/Card'
 import classes from './Deck.module.css'
 import uniqueId from 'uniqid'
-import { doubleBid } from '../../../Store/Actions';
 
 class Deck extends Component { 
 
@@ -31,9 +30,7 @@ class Deck extends Component {
             <div classes={classes.Decks}>
                 <div className={classes.Cards}>
                     <div className={classes.alignCards + ' ' + CardsClass}>
-                        {/* <Fragment> */}
                             {cards}
-                        {/* </Fragment> */}
                     </div>
                 </div>
                 <span>{this.props.deckNumber}: </span>

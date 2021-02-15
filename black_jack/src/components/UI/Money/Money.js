@@ -21,8 +21,7 @@ export class Money extends Component {
         if(this.bidInputValue !== 0) {
             this.props.startRound(this.bidInputValue);
             this.setState({lastRoundBid:this.bidInputValue})
-            // this.bidInputValue = 0;
-            // this.props.makeBid(this.bidInputValue);
+
             
         }
         else alert('bid must be more than 0')
@@ -49,7 +48,6 @@ export class Money extends Component {
                 <div className={classes.budget}>
                    budget: <div>
                         {this.props.round 
-                        // ? this.props.playerBadget -this.props.roundbid  
                         ? this.props.playerBadget- totalBids  
                         : this.props.playerBadget }$
                        </div>
@@ -57,7 +55,6 @@ export class Money extends Component {
                 {
                 <form onSubmit={e=>this.mySubmitFunction(e)}>
                     <label
-                     //for="quantity"
                      >bid : </label>
                     <input 
                         disabled={this.props.round}
@@ -65,11 +62,9 @@ export class Money extends Component {
                         id="amount"
                         name="amount" 
                         min="1" 
-                        // value={this.state.bidOffer}
                         className={classes.bidAmountInput}
                         onChange={e => this.inputEventHandler(e)}
                         placeholder={this.props.roundbid[0] > 0 ? this.props.roundbid[0] : 'bid amount'}
-                        // value={this.bidInputValue}
                         max={this.props.playerBadget}></input>
                     <input className={classes.submitBet} disabled={this.props.round}  type="submit" value="deal"></input>
                 </form>}

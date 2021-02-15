@@ -2,7 +2,6 @@ import React, { Component , memo } from 'react'
 import {connect} from 'react-redux'
 import Deck from '../Deck/Deck'
 import classes from './Dealer.module.css'
-import hocDealer from '../../../hoc/asyncComponent/hocDealer'
 import * as actions from '../../../Store/Actions/index'
 
 export class Dealer extends Component {
@@ -16,20 +15,10 @@ export class Dealer extends Component {
             if(!stand)
                 return false
         }
-
         return true
     }
 
-    // didPlayerFinish = (handsResults) => {
-    //     for (let index = 0; index < handsResults.length; index++) {
-    //         if(handsResults[index] === '')
-    //             return false
-    //     }
-
-    //     return true
-    // }
-    // let x = this.didPlayerFinish(this.props.handsResult);
-  
+   
    
     shouldComponentUpdate = (nextProps,nextState) => {
         if(!nextProps.dealerDeck.length)
@@ -42,23 +31,19 @@ export class Dealer extends Component {
     }
 
     componentDidUpdate = () => {
-        // debugger;
-        // debugger;
+      
         if(
-            // this.checkIfallPlayersDeckAreDone(this.props.stand)
              this.checkIfallPlayersDeckAreDone(this.props.handsResult)
          )
         {
             switch (true) {
                 case this.props.dealerCardsSum > 21:
                     console.log('dealer lost (cards > 21)')
-                    // this.props.changeRoundStatus('win')
                     this.props.dealerBust();
-                    // let lengthOfhandsResults = this.props.handsResult.length;
-                    // if(this.props.handsResult[lengthOfhandsResults] !== 'lost')
-                    // {// this.props.changeHandResult('win');
-                    //     // this.props.changeRoundStatus('decision');
-                    // }
+                    this.setState({
+                        numOfRequestForCard:0
+                    });
+                 
                     break;
                 case this.props.dealerCardsSum < 17 :
                         //  add another card to the dealer
@@ -72,12 +57,12 @@ export class Dealer extends Component {
                     break;
                         
                 default:
-                            // if(this.props.handsResult[this.props.split] !== 'decision')
-                            //     this.props.changeHandResult('decision');
-                            this.props.changeRoundStatus('decision');     
-                            this.setState({
-                                numOfRequestForCard:0
-                            });   
+                           
+                            this.props.changeRoundStatus('decision');
+                            if(this.state.numOfRequestForCard)     
+                                this.setState({
+                                    numOfRequestForCard:0
+                                });   
                     break;
             }
         }
@@ -108,8 +93,6 @@ const MapStateToProps = state => {
     return {
         dealerDeck : state.cards.dealerCards,
         handsResult : state.round.handsResult,
-        // stand : state.round.stand,
-        // split : state.round.split,
         dealerCardsSum:state.cards.dealerCardsSum,
         
 
@@ -119,13 +102,11 @@ const MapStateToProps = state => {
 
 const mapDistpatchToProps = dispatch => {
     return {
-        // startRound : () => dispatch(actions.startRound()),
-        // generateStartCards : () => dispatch(actions.devideCardForRoundStart()),
+
         changeRoundStatus : (status) => dispatch(actions.roundStatus(status)),
         addCardtoDealer : () => dispatch(actions.addCard('dealer')),
         dealerBust : () => dispatch(actions.dealerBust()),
-        // changeHandResult : (result) => dispatch(actions.changeHandResult(result)),
-        // changeRoundStatus : () => dispatch(actions.changeRoundStatus('decision'))
+       
  
     }
 }

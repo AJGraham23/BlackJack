@@ -7,36 +7,20 @@ import { connect } from 'react-redux'
 class Player extends Component {
 
 
-    // const [AcesValuedOne, setAcesValuedOne] = useState(0)
-    
-   
   
-    // shouldComponentUpdate = (nextprops,nextState) => {
-    //     if(nextprops.playerCards.length !== this.props.playerCards.length)
-    //         return true
-    //     else
-    //         return false;
-    // }
     componentDidUpdate = () => {
-        // debugger;
-        // debugger;
+
         if(this.props.playerCards.length)
         {
             if(this.props.playerCards[this.props.activeDeckNumber].length < 2 && this.props.roundStatus === 'pending')
             {
-                    let what = 'wtf';
                     this.props.giveOneMoreCard(this.props.activeDeckNumber);
             }
         }
         // cards sum is 21 or over
         if(this.props.playerCardsSum[this.props.activeDeckNumber] > 21) {
-            // this.props.roundStatus('lost');
-            // this.props.
             this.props.changeHandResult('lost');
-            // this.props.toStand(this.props.numOfSplits);
         }
-        // props.initRound(props.budget - props.roundBid)
-        // console.log('player lost');
         else if (this.props.playerCardsSum[this.props.activeDeckNumber] === 21
             && !this.props.playerCards[this.props.activeDeckNumber].deckFinished) {
             console.log('enable stand mode');
@@ -111,10 +95,7 @@ class Player extends Component {
     
 const MapStateToprops = state => {
     return {
-        // playRound : state.round.round,
-        // bidRound : state.round.bid,
         roundStatus : state.round.roundStatus,
-        // numOfSplits : state.round.split,
         activeDeckNumber : state.cards.activeDeckNumber,
         playerCards : state.cards.playerCards,
         playerCardsSum : state.cards.playerCardsSum,
@@ -126,9 +107,7 @@ const mapDistpatchToprops = dispatch => {
     return {
         toStand : (activeDeckNumber) => dispatch(actions.stand(activeDeckNumber)),
         markDeckAsFinished : (activeDeckNumber) => dispatch(actions.markDeckAsFinished(activeDeckNumber)),
-        // roundStatus : (status) => dispatch(actions.roundStatus(status)),
         changeHandResult : (result) => dispatch(actions.changeHandResult(result)),
-        // updatePlayerDeckSum : (newSum,deckOwner) => dispatch(actions.changeDeckSum(newSum,deckOwner))
         giveOneMoreCard : (activeDeckNumber) => dispatch(actions.addCard('player',activeDeckNumber))
 
     }

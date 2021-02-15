@@ -91,16 +91,6 @@ const findActiveDeck = (playerCards) => {
 
 
 
-const findNewActiveDeck = (playerCards) => {
-    
-    for (let index = playerCards.length-1; index > -1; index--) {
-        if(!playerCards[+index].deckFinished)
-            return index;
-        
-    }
-}
-
-
 
 const reduecer = (state = initState, action) => {
     // state.playerCards.forEach(playerDecks => {
@@ -158,32 +148,24 @@ const reduecer = (state = initState, action) => {
                 activeDeckIndex = state.playerCards.length - 1;
             let sum ;
             if(action.card.value > 10 && !action.card.Ace)
-                // sum = 10 + (action.holder === 'player' ? state.playerCardsSum[action.NumOfsplits] : state.dealerCardsSum);
                 sum = 10 + (action.holder === 'player' ? state.playerCardsSum[activeDeckIndex] : state.dealerCardsSum);
             else
-                // sum = action.card.value + (action.holder === 'player' ? state.playerCardsSum[action.NumOfsplits] : state.dealerCardsSum);
                 sum = action.card.value + (action.holder === 'player' ? state.playerCardsSum[activeDeckIndex] : state.dealerCardsSum);
             if(sum > 21)
-                // sum = checkForDifferentSum([...(action.holder === 'player' ? state.playerCards[action.NumOfsplits] : state.dealerCards) , action.card]);
                 sum = checkForDifferentSum([...(action.holder === 'player' ? state.playerCards[activeDeckIndex] : state.dealerCards) , action.card]);
        
 
             if(action.holder === 'player')
             {
                 let playerCardsSumArray = state.playerCardsSum.map((value,index)=>{
-                    // if(index === action.NumOfsplits)
                     if(index === activeDeckIndex)
                         return sum;
                     else return value;
                 })
 
-                // debugger;
                 let newPlayerCards = state.playerCards.map((deck,deckIndex)=>{
-                    // if(deckIndex === action.NumOfsplits)
                     if(deckIndex === activeDeckIndex)
                     {
-                        // state.playerCards[deckIndex].activeDeck = true;
-                        // state.playerCards[deckIndex].deckFinished = false;
                         return state.playerCards[deckIndex].concat(action.card);
                     }
                     else return state.playerCards[deckIndex]
@@ -234,17 +216,21 @@ const reduecer = (state = initState, action) => {
                 ...initState
             }
         case actionTypes.SPLIT_DECK:
-            // debugger;
+           
             // find active Deck
             let activeDeck = findActiveDeck(state.playerCards);
             if(activeDeck === -1)
                 activeDeck = state.playerCards.length - 1;
+            
             // set new card decks for the player after the split
-            let firstSplitedCard = state.playerCards[activeDeck][0] 
+
+            // let firstSplitedCard = state.playerCards[activeDeck][0] 
             let secondSplitedCard = [];
             secondSplitedCard.deckFinished = false;
             secondSplitedCard.activeDeck = true;
-            secondSplitedCard.push( state.playerCards[activeDeck][1]) 
+            secondSplitedCard.push( state.playerCards[activeDeck][1]);
+            
+            // map new player cards and take out spiltted card
             let newPlayerCards = state.playerCards.map((deck,deckIndex)=>{
                 if(deckIndex === activeDeck){
                     // firstSplitedCard.
@@ -255,6 +241,7 @@ const reduecer = (state = initState, action) => {
                 }
                 else return deck;
             } ) ;
+            // add the splitted card as a new deck of cards
             newPlayerCards = newPlayerCards.concat([secondSplitedCard]);
             // set new card decks summary array   
             let newPlayerSumCards = state.playerCardsSum.concat(state.playerCardsSum[activeDeck]/2);

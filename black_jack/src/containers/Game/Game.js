@@ -8,7 +8,6 @@ import * as actions from '../../Store/Actions/index'
 const Game = (props) => {
 
     const gameRefInitMount = useRef(false);
-    // let playerFinishedHisHands = props.stand.find(standValue => standValue === false)
     useEffect(() => {
         if( props.roundStatus === 'decision') 
         {
@@ -75,7 +74,7 @@ const Game = (props) => {
         if(gameRefInitMount.current) {
             console.log('rendering Game from use effect');
             console.log(props);
-            if(!props.dealerCards.length && props.roundStatus === 'pending')
+            if(!props.dealerSum && props.roundStatus === 'pending')
             {
                 // debugger;
                 props.devideStartingCards();
@@ -90,18 +89,6 @@ const Game = (props) => {
     
 
  
-    // const checkStatus = () => {
-    //     if(props.dealerCards.legth) {
-    //         let sum = 0;
-    //         let cards = props.dealerCards;
-    //         for(let card of cards)
-    //         {
-    //             sum = sum + card.value;
-    //         }
-            
-    //     }
-    // }
-    // console.log('game');
     console.count();
 
 
@@ -113,24 +100,12 @@ const Game = (props) => {
 
     console.log(props.allStand)
     return ( 
-        // new Promise((res,rej)=> {
-
-        //     return setTimeout(()=>{},3000);
-        // }).then(data => {
-        
-        //     console.log('3 sec is up');
-        //     console.log(data);
-        // });
-
-        
-        // this.checkStatus();
-
+      
         
             <div className={classes.Game}>
                 <h1>Welcome to Blackjack</h1>
                 <p className={classes.roundResualt}>
                     {finalResualt}
-                    {/* {props.roundStatus === 'lost'?'dealer won': props.roundStatus === 'win' ? 'you won' : ''} */}
                 </p>
                 <TableBoard>
 
@@ -143,16 +118,15 @@ const Game = (props) => {
 }
 const MapStateToProps = state => {
     return {
-      dealerCards:state.cards.dealerCards,
-      playerCards:state.cards.playerCards,
+    //   dealerCards:state.cards.dealerCards,
+    //   playerCards:state.cards.playerCards,
+    //   stand:state.round.stand,
+    //   budget:state.game.budget,
+    //   allStand:state.round.stand.find(el=> el === false),
       roundStatus:state.round.roundStatus,
       roundBids:state.round.bid,
-      budget:state.game.budget,
       dealerSum:state.cards.dealerCardsSum,
       playerSum:state.cards.playerCardsSum,
-      stand:state.round.stand,
-      allStand:state.round.stand.find(el=> el === false),
-    //   numOfSplits:state.round.split,
       roundStarted:state.round.round,
       dealerBust:state.round.dealerBust
     }
@@ -161,9 +135,9 @@ const MapStateToProps = state => {
 const mapDistpatchToProps = dispatch => {
     return {
         // startGame : () => dispatch(actions.startGame()),
-        changeRoundStatus : (status) => dispatch(actions.roundStatus(status)),
+        // changeRoundStatus : (status) => dispatch(actions.roundStatus(status)),
+        // hitOneMoreCard : (newBudget) => dispatch(actions.initRound(newBudget)),
         initRound : (totalProfit) => dispatch(actions.initRound(totalProfit)),
-        hitOneMoreCard : (newBudget) => dispatch(actions.initRound(newBudget)),
         devideStartingCards : () => dispatch(actions.devideCardForRoundStart()),
         collectProfit : (profit) => dispatch(actions.collectProfits(profit))
         

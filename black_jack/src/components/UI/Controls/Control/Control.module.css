@@ -24,12 +24,21 @@
 
 }
 
-.Control button:active{
+.Control button:disabled{
     box-shadow: 0 2px rgb(3, 37, 3);
     transform: translateY(2px);
+    cursor: not-allowed;
 }
-
-.Disabled:hover,.Disabled:active {
+/* 
+.Control button:hover,.Control button:active {
     background-color: rgb(63, 63, 63);
     cursor: not-allowed;
+} */
+
+
+
+button:disabled,.button:disabled:hover {
+    cursor: not-allowed;
+    background-color: gray;
+    color: initial;
 }

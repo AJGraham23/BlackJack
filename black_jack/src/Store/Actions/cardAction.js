@@ -9,28 +9,30 @@ export const devideCardForRoundStart = () => {
         
             setTimeout(() => {
                 let FirstCard={
-                    value:7,
+                    value:2,
                     symbol:'diamond',
                     Ace: false
                 };
 
                 let SecondCard={
-                    value:7,
+                    value:3,
                     symbol:'club',
                     Ace: false
                 };
+                // let FirstCard = GenerateRandomCard()
+                // let SecondCard = GenerateRandomCard()
 
                 let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 
                 let dealerSum = checkCardsSum(dealerCards);
-                // if(FirstCard.value > 10)
-                //     FirstCard.value = 10;
-                // if(FirstCard.value === 1)
-                //     FirstCard.value = 11;
-                // if(SecondCard.value > 10)
-                //     SecondCard.value = 10;
-                // if(SecondCard.value === 1)
-                //     SecondCard.value = 11;
+                if(FirstCard.value > 10)
+                    FirstCard.value = 10;
+                if(FirstCard.value === 1)
+                    FirstCard.value = 11;
+                if(SecondCard.value > 10)
+                    SecondCard.value = 10;
+                if(SecondCard.value === 1)
+                    SecondCard.value = 11;
                 let playerCards = [FirstCard,SecondCard]
                 // let playerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 let playerSum = checkCardsSum(playerCards);
@@ -88,13 +90,13 @@ export const addCard = (holder,NumOfsplits) => {
       
             setTimeout(() => {
                 let card = GenerateRandomCard();
-                card={
-                    value:7,
-                    symbol:'club',
-                    Ace: false
-                };
-                // if (card.value > 10)
-                //     card.value = 10;
+                // card={
+                //     value:7,
+                //     symbol:'club',
+                //     Ace: false
+                // };
+                if (card.value > 10)
+                    card.value = 10;
                 if(card.Ace)
                     card.value = 11;
                 

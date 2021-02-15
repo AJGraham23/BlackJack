@@ -7,20 +7,23 @@ import { connect } from 'react-redux'
 
 export class Controls extends Component {
 
+    state = {
+        hitButton:false,
+        doubleButton:false,
+        splitButton:false,
+        standButton:false,
+        intervalDisable:false
+    }
 
     doublingBid = () => {
-        // this.props.doubleBid(this.props.activeDeckNumber);
-        // this.props.giveOneMoreCard(this.props.activeDeckNumber);
-        // this.props.toStand(this.props.activeDeckNumber);
-        // this.props.markDeckAsFinished(this.props.activeDeckNumber);
-        // this.props.doubleOperation(this.props.activeDeckNumber)
-
         // console.log(this.props.bamba);
         // this.props.actionPromise('shawarma').then(data=>
         //     {
         //         console.log(data);
         //         console.log(this.props.bamba);
         //     })
+        // this.setState({disbaleButtons:true})
+        this.disableDoubleClcicks();
         this.props.doubleOperation(this.props.activeDeckNumber);
     }
     
@@ -35,11 +38,27 @@ export class Controls extends Component {
     
     playerSpliting = () => {
         console.log('split and may god help us');
+        this.disableDoubleClcicks();
         this.props.splitDecks(this.props.playerCards.length);
         // this.props.giveOneMoreCard(this.props.split);
     }
 
+    disableDoubleClcicks = () => {
+        this.setState({
+            intervalDisable: true,
+          });
+          
+          // enable after 5 second
+          setTimeout(()=>{
+             this.setState({
+              intervalDisable: false,
+            });
+          }, 1000)
+    }
+
     standClicked = () => {
+        // this.setState({disbaleButtons:true})
+        this.disableDoubleClcicks();
         this.props.toStand(this.props.activeDeckNumber);
         this.props.markDeckAsFinished(this.props.activeDeckNumber)
     }
@@ -52,45 +71,52 @@ export class Controls extends Component {
         console.count();
         // debugger;
         let numOfPlayerCards = this.props.playerCards[this.props.activeDeckNumber].length;
-        const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber];
-        const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber];
+        const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
+        const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
         const doubleButtonVisibility = this.playerCanDouble() && this.props.roundStatus === 'pending'
-        && !this.props.standMode[this.props.activeDeckNumber] && numOfPlayerCards === 2;
-        const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble() 
-        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]);
+        && !this.props.standMode[this.props.activeDeckNumber] && numOfPlayerCards === 2 && !this.state.intervalDisable;;
+        const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble()  
+        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]) && !this.state.intervalDisable;;
+        
+        let newButtonState = {
+            hitButton:hitButtonVisibility,
+            doubleButton:doubleButtonVisibility,
+            splitButton:splitButtonVisibility,
+            standButton:standButtonVisibility
+        }
+        // let aaa = "arik like to eat pizza".replace( /to eat (pizza|banan)/,'')
+        if(( JSON.stringify(newButtonState) !== JSON.stringify(this.state).replace(/,"intervalDisable":(false|true)/,'')))
+            this.setState((state,props)=>({...newButtonState}));
         return (
             <div className={classes.Controls}>
-                {/* hit */}
                 <Control
-                    visibility = {hitButtonVisibility ? 'visible':'hidden'}
-                    clicked={(e)=> this.props.giveOneMoreCard(this.props.activeDeckNumber)}
+                    disableButton={this.state.intervalDisable}
+                    // visibility = {hitButtonVisibility ? 'visible':'hidden'}
+                    visibility = {this.state.hitButton ? 'visible':'hidden'}
+                    clicked={(e)=> {
+                       this.disableDoubleClcicks();
+                        this.props.giveOneMoreCard(this.props.activeDeckNumber)
+                    }}
                 >Hit
                 </Control>
-                {/* {this.props.roundStatus === 'pending' && !this.props.standMode ? 
-                : ''} */}
-
-                {/* Stand */}
                 <Control
-                    clicked={ this.standClicked
-                        // ()=> { 
-                        // this.props.toStand(this.props.split);
-                        // this.props.markDeckAsFinished(this.props.split)
-                    }
-                    visibility={standButtonVisibility ? 'visible':'hidden'}
-                >
-                Stand</Control>
-                {/* {this.props.roundStatus === 'pending' && !this.props.standMode ?
-                : ''} */}
+                    // disableButton={this.state.disbaleButtons}
+                    clicked={this.standClicked}
+                    // visibility={standButtonVisibility ? 'visible':'hidden'}
+                    visibility={this.state.standButton ? 'visible':'hidden'}
+                >Stand
+                </Control>
                  <Control
+                    // disableButton={this.state.disbaleButtons}
                     clicked={this.doublingBid}
-                    visibility = {doubleButtonVisibility ? 'visible':'hidden'}
+                    visibility = {this.state.doubleButton ? 'visible':'hidden'}
+                    // visibility = {doubleButtonVisibility ? 'visible':'hidden'}
                  >Double</Control>
-                {/* {this.props.playerCanDouble && this.props.roundStatus === 'pending'
-                 && !this.props.standMode && this.props.numOfPlayerCards === 2 ? 
-                 : ''} */}
                 <Control
+                    // disableButton={this.state.disbaleButtons}
                     clicked={this.playerSpliting}
-                    visibility={splitButtonVisibility ? 'visible':'hidden'}
+                    visibility={this.state.splitButton ? 'visible':'hidden'}
+                    // visibility={splitButtonVisibility ? 'visible':'hidden'}
                 >split
                 </Control>
                 {this.props.IsDeal ? <Control>Deal</Control>: null} 
@@ -102,13 +128,11 @@ export class Controls extends Component {
 
 const MapStateToProps = state => {
     return {
-        // playerCanDouble : state.game.budget - state.round.bid[state.round.split]*2 > -0.1 ? true : false,
-        // split : state.round.split,
+        lit : state.round.split,
         bid : state.round.bid,
         budget : state.game.budget,
         standMode : state.round.stand,
         roundStatus : state.round.roundStatus,
-        // numOfPlayerCards : state.cards.playerCards.length,
         playerCards : state.cards.playerCards,
         bamba : state.cards.bamba,
         activeDeckNumber : state.cards.activeDeckNumber
@@ -127,7 +151,6 @@ const mapDistpatchToProps = dispatch => {
         doubleBid : (activeDeckNumber) => dispatch(actions.doubleBid(activeDeckNumber)),
         splitDecks : (activeDeckNumber) => dispatch(actions.splitAnotherDeck(activeDeckNumber)),
         actionPromise : (activeDeckNumber) => dispatch(actions.actionPromise(activeDeckNumber)),
-        // doubleOperation : (activeDeckNumber) => dispatch(actions.doubleOperation(activeDeckNumber))
         doubleOperation : (activeDeckNumber) => dispatch(actions.doubleOperation(activeDeckNumber))
 
     }

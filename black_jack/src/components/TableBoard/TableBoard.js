@@ -1,4 +1,4 @@
-import React, { Component , Fragment , memo , Suspense} from 'react'
+import React, { Component , Fragment , memo } from 'react'
 import Dealer from './Dealer/Dealer'
 import {connect} from 'react-redux'
 import Player from './Player/Player'
@@ -17,18 +17,6 @@ export class TableBoard extends Component {
     }
 
     
-  
-
-    // componentDidMount = () => {
-    //     console.log('tableBoard rendered');
-        
-        
-    // }
-    
-    componentDidUpdate = () => {
-        
-    }
-
     startGameFunc = (e) => {
         this.props.startGame();
         this.setState({playing:true});
@@ -62,19 +50,6 @@ export class TableBoard extends Component {
         return (
             <div className={classes.TableBoard}>
                 {this.props.lost ? playerLost: playerStillAlive}
-                {/* : */}
-                {/* <Fragment>
-
-                <StartButton
-                    // clicked={this.startGameFunc}
-                    >
-                        start game
-                </StartButton>
-                
-                </Fragment>
-                } */}
-                {/* <div className={classes.Dealer}>
-                </div> */}
             </div>
         )
     }
@@ -86,20 +61,14 @@ export class TableBoard extends Component {
 const MapStateToProps = state => {
     return {
         playing : state.game.isPlaying,
-        lost: state.game.lost
-        // round:state.round.round
-        // dealerCards:state.cards.dealerCards,
-        // playerCards:state.cards.playerCards
-        
+        lost: state.game.lost        
     }
 }
 
 const mapDistpatchToProps = dispatch => {
     return {
         startGame : () => dispatch(actions.startGame()),
-        // startRound : () => dispatch(actions.startRound()),
-        // startDevideCards : () => dispatch(actions.devideCardForRoundStart())
-    }
+          }
 }
 
 
