@@ -21,17 +21,17 @@ const Game = (props) => {
                         case props.playerSum[+index] - props.dealerSum > 0:
                             playerResults.push('win');
                             totalProfit+= props.roundBids[index];
-                            props.collectProfit(props.roundBids[+index])    
+                            props.collectProfitAndInitBid(props.roundBids[+index],+index)    
                         break;
                         case props.playerSum[+index] - props.dealerSum < 0:
                             playerResults.push('lost');
                             totalProfit-= props.roundBids[index];
-                            props.collectProfit(-props.roundBids[+index])
+                            props.collectProfitAndInitBid(-props.roundBids[+index],+index)
                         break;
                         case props.playerSum[+index] - props.dealerSum === 0:
                             totalProfit+= props.roundBids[index];
                             playerResults.push('tie');
-                            props.collectProfit(0)   
+                            props.collectProfitAndInitBid(0,+index)   
                         break;
 
                         default:
@@ -43,7 +43,7 @@ const Game = (props) => {
                 {
                     playerResults.push('lost');
                     totalProfit-= props.roundBids[index];
-                    props.collectProfit(-props.roundBids[+index])
+                    props.collectProfitAndInitBid(-props.roundBids[+index],+index)
                 }
             }
             props.initRound();
@@ -59,11 +59,11 @@ const Game = (props) => {
                 if (props.playerSum[+index] < 22)
                 {
                     totalProfit+= props.roundBids[index];   
-                    props.collectProfit(props.roundBids[+index]) 
+                    props.collectProfitAndInitBid(props.roundBids[+index],+index) 
                 }
                 else console.log('hand ' + (+index) + 'lost');
                     totalProfit-= props.roundBids[index];   
-                    props.collectProfit(-props.roundBids[+index]) 
+                    props.collectProfitAndInitBid(-props.roundBids[+index],+index) 
             }
             props.initRound();
         }
@@ -139,7 +139,8 @@ const mapDistpatchToProps = dispatch => {
         // hitOneMoreCard : (newBudget) => dispatch(actions.initRound(newBudget)),
         initRound : (totalProfit) => dispatch(actions.initRound(totalProfit)),
         devideStartingCards : () => dispatch(actions.devideCardForRoundStart()),
-        collectProfit : (profit) => dispatch(actions.collectProfits(profit))
+        // collectProfit : (profit) => dispatch(actions.collectProfits(profit)),
+        collectProfitAndInitBid : (profit,bidIndex) => dispatch(actions.collectProfitAndInitBid(profit,bidIndex))
         
     }
 }

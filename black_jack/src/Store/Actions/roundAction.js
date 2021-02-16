@@ -68,6 +68,24 @@ export const dealerBust = () => {
         type:actionTypes.DEALER_BUST
     }
 }
+
+
+export const initDeckBid = (bidDeckIndex) => {
+    return dispatch => {
+
+        return new Promise((resolve, reject) => {
+            
+            dispatch({
+                 type:actionTypes.INIT_ROUND_BID,
+                 deckIndex:bidDeckIndex
+            });
+            resolve('bid deck Index : ' +bidDeckIndex);
+        })
+    }
+}
+
+
+
 // export const splitAnotherDeck = () => {
 //     return {
 //         type:actionTypes.SPLIT_DECK

@@ -38,11 +38,12 @@ export class Money extends Component {
 
     render() {
         // calc budget left 
+        // debugger;
         let totalBids = +this.props.roundbid.reduce((a,b)=> a+b,0);
         
         if(this.props.roundbid[0])
             this.bidInputValue = this.props.roundbid[0];
-        else this.bidInputValue = this.state.lastRoundBid;
+        else this.bidInputValue = +this.state.lastRoundBid;
         return (
             <div className={classes.Money}>
                 <div className={classes.budget}>

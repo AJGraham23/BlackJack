@@ -20,16 +20,34 @@ export const startGameNow = () => {
 }
 
 export const collectProfits = (profit) => {
-    return {
-        type:actionTypes.COLLECT_PROFITS,
-        profit
-    }
+
+    return dispatch => {
+
+        return new Promise((resolve, reject) => {
+            dispatch({
+                type:actionTypes.COLLECT_PROFITS,
+                profit
+            });
+            resolve('profit for deck: ' + profit);
+         });
+     }
+
+    // return {
+    //     type:actionTypes.COLLECT_PROFITS,
+    //     profit
+    // }
 }
 
 
-export const changeBudget = (lastBidSum )=> {
-    return {
-        type:actionTypes.CHANGE_BUDGET,
-        sumBidProfit:lastBidSum
-    }
-}
+// export const changeBudget = (lastBidSum )=> {
+//     return dispatch => {
+
+//         return new Promise((resolve, reject) => {
+//             dispatch({
+//                type:actionTypes.CHANGE_BUDGET,
+//                sumBidProfit:lastBidSum
+//            });
+//            resolve('init bid number ' + lastBidSum);
+//         })
+//     }
+// }

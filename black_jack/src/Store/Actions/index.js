@@ -1,18 +1,19 @@
 import * as actionTypes from "./actionTypes";
-import {doubleBid , stand } from "./roundAction";
+import {doubleBid , stand, initDeckBid } from "./roundAction";
 import {addCard,markDeckAsFinished} from "./cardAction";
+import { collectProfits } from './gameAction'
 
 
 export {
     startGame,
-    changeBudget,
+    // changeBudget,
     collectProfits
 } from './gameAction';
 
 export {
     startRound,
     // makeBid,
-
+    initDeckBid,
     dealerBust,
     changeHandResult,
     roundStatus,
@@ -78,5 +79,16 @@ export const doubleOperation = (activeDeck) => {
             });
         })
 
+    }
+}
+
+
+
+export const collectProfitAndInitBid = (profit,bidIndex) => {
+    return dispatch => {
+        dispatch(collectProfits(profit)).then(data => {
+            console.log(data);
+            dispatch(initDeckBid(bidIndex))
+        })
     }
 }

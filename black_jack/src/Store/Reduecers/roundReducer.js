@@ -1,3 +1,4 @@
+import { actionPromise } from '../Actions'
 import * as actionTypes from '../Actions/actionTypes'
 
 const initState = {
@@ -28,6 +29,15 @@ const reduecer = (state = initState, action) => {
             return {...state,
                 roundStatus:action.status
             }
+        case actionTypes.INIT_ROUND_BID:
+            // debugger;
+            let newBidsArray = state.bid.map((bidAmount,bidIndex)=> {
+                if(bidIndex === action.deckIndex)
+                    return 0
+                else
+                    return bidAmount
+            });
+            return {...state,bid:newBidsArray}
 
         case actionTypes.DOUBLE_BID:
             // debugger;
