@@ -9,14 +9,14 @@
     font-size: 104%;
     font-variant-caps: all-petite-caps;
     padding: 14%;
-    width: 140%;
+    width: 120%;
     margin: 5px 2px;
-    border-radius: 12px;
+    border-radius: 52px;
     outline: thin ;
     box-shadow: 0 6px rgb(4, 63, 4);
 }
 .Control button:hover{   
-    background-color: whitesmoke;
+    background-color: rgb(209, 222, 226);
     cursor: pointer;
     color: rgb(33, 155, 211);
     transition: ease-in 0.3s;
@@ -26,7 +26,9 @@
 
 .Control button:disabled{
     box-shadow: 0 2px rgb(3, 37, 3);
-    transform: translateY(2px);
+    box-shadow: 0 6px rgb(4, 63, 4);
+
+    /* transform: translateY(2px); */
     cursor: not-allowed;
 }
 /* 
@@ -37,8 +39,13 @@
 
 
 
-button:disabled,.button:disabled:hover {
+button:disabled, .shutDown button:hover{
     cursor: not-allowed;
     background-color: gray;
+    transform: initial;
     color: initial;
+    box-shadow: 0 6px rgb(4, 63, 4);
+
+    /* transition: initial; */
 }
+

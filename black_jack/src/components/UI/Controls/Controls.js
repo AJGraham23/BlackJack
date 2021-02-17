@@ -12,8 +12,13 @@ export class Controls extends Component {
         doubleButton:false,
         splitButton:false,
         standButton:false,
+        insuranceButton:false,
         intervalDisable:false
     }
+
+    // shouldComponentUpdate = (nextProps,nextState) => {
+    //     return true;
+    // }
 
     doublingBid = () => {
         // console.log(this.props.bamba);
@@ -63,30 +68,75 @@ export class Controls extends Component {
         this.props.markDeckAsFinished(this.props.activeDeckNumber)
     }
 
+    clickMakeInsurance = () => {
+        this.disableDoubleClcicks();
+        this.props.makeInsurance(); 
+    }
+
     areCardsEqual = (cards) => {
         return cards[0].value === cards[1].value;
     }
-
-    render() {
-        console.count();
-        // debugger;
+    componentDidMount = () => {
+        this.updateControls();
+    }
+    componentDidUpdate = () => {
+        this.updateControls();
+    }
+    updateControls = () => {
         let numOfPlayerCards = this.props.playerCards[this.props.activeDeckNumber].length;
+        
         const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
+        
         const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
+        
         const doubleButtonVisibility = this.playerCanDouble() && this.props.roundStatus === 'pending'
         && !this.props.standMode[this.props.activeDeckNumber] && numOfPlayerCards === 2 && !this.state.intervalDisable;;
+        
         const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble()  
-        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]) && !this.state.intervalDisable;;
+        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]) && !this.state.intervalDisable;
+        
+        const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - Math.round(this.props.bid[0]*1.5) > 0) && !this.props.insurance ; 
         
         let newButtonState = {
             hitButton:hitButtonVisibility,
             doubleButton:doubleButtonVisibility,
             splitButton:splitButtonVisibility,
-            standButton:standButtonVisibility
+            standButton:standButtonVisibility,
+            insuranceButton:InsuranceButtonVisibility
         }
         // let aaa = "arik like to eat pizza".replace( /to eat (pizza|banan)/,'')
         if(( JSON.stringify(newButtonState) !== JSON.stringify(this.state).replace(/,"intervalDisable":(false|true)/,'')))
-            this.setState((state,props)=>({...newButtonState}));
+            this.setState(()=>({...newButtonState}));
+    }
+
+    render() {
+        console.count();
+        // // debugger;
+        // let numOfPlayerCards = this.props.playerCards[this.props.activeDeckNumber].length;
+        
+        // const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
+        
+        // const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
+        
+        // const doubleButtonVisibility = this.playerCanDouble() && this.props.roundStatus === 'pending'
+        // && !this.props.standMode[this.props.activeDeckNumber] && numOfPlayerCards === 2 && !this.state.intervalDisable;;
+        
+        // const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble()  
+        // && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]) && !this.state.intervalDisable;
+        
+        // // const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - this.props.bid[0]*1.5) && !this.props.insurance; 
+        
+        // let newButtonState = {
+        //     hitButton:hitButtonVisibility,
+        //     doubleButton:doubleButtonVisibility,
+        //     splitButton:splitButtonVisibility,
+        //     standButton:standButtonVisibility,
+        //     // insuranceButton:InsuranceButtonVisibility
+        // }
+        // // let aaa = "arik like to eat pizza".replace( /to eat (pizza|banan)/,'')
+        // if(( JSON.stringify(newButtonState) !== JSON.stringify(this.state).replace(/,"intervalDisable":(false|true)/,'')))
+        //     this.setState(()=>({...newButtonState}));
+        console.log(this.state);
         return (
             <div className={classes.Controls}>
                 <Control
@@ -119,6 +169,17 @@ export class Controls extends Component {
                     // visibility={splitButtonVisibility ? 'visible':'hidden'}
                 >split
                 </Control>
+                <Control
+                    clicked={() => {
+                        // this.disableDoubleClcicks();
+                        // this.props.makeInsurance(); 
+                        this.clickMakeInsurance();
+                        
+                    }
+                    }
+                    visibility={this.state.insuranceButton ? 'visible':'hidden'}
+                >insurance
+                </Control>
                 {this.props.IsDeal ? <Control>Deal</Control>: null} 
             </div>
         )
@@ -134,7 +195,9 @@ const MapStateToProps = state => {
         standMode : state.round.stand,
         roundStatus : state.round.roundStatus,
         playerCards : state.cards.playerCards,
+        dealerCards : state.cards.dealerCards,
         bamba : state.cards.bamba,
+        insurance : state.round.insurance,
         activeDeckNumber : state.cards.activeDeckNumber
 
         
@@ -151,7 +214,8 @@ const mapDistpatchToProps = dispatch => {
         doubleBid : (activeDeckNumber) => dispatch(actions.doubleBid(activeDeckNumber)),
         splitDecks : (activeDeckNumber) => dispatch(actions.splitAnotherDeck(activeDeckNumber)),
         actionPromise : (activeDeckNumber) => dispatch(actions.actionPromise(activeDeckNumber)),
-        doubleOperation : (activeDeckNumber) => dispatch(actions.doubleOperation(activeDeckNumber))
+        doubleOperation : (activeDeckNumber) => dispatch(actions.doubleOperation(activeDeckNumber)),
+        makeInsurance : () => dispatch(actions.makeInsurance())
 
     }
 }

@@ -19,6 +19,13 @@ export const startGameNow = () => {
     }
 }
 
+export const collectInsurance = (insuracneAmount) => {
+    return {
+        type:actionTypes.COLLECT_INSURANCE,
+        insuracneAmount
+    }
+}
+
 export const collectProfits = (profit) => {
 
     return dispatch => {

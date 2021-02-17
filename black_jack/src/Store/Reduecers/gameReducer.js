@@ -12,6 +12,8 @@ const reduecer = (state = initState, action) => {
                 return {...state, isPlaying:true}
         case actionTypes.CHANGE_BUDGET:
                 return {...state, budget:state.budget - action.bid}
+        case actionTypes.COLLECT_INSURANCE:
+                return {...state, budget:state.budget + action.insuracneAmount}
         case actionTypes.COLLECT_PROFITS:
             // debugger;
                 return {...state, budget:state.budget + action.profit}

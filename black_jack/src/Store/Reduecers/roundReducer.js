@@ -9,7 +9,8 @@ const initState = {
     stand:[false],
     dealerBust:false,
     bid:[0],
-    originalBid:0
+    originalBid:0,
+    insurance:false
 }
 
 
@@ -24,7 +25,16 @@ const reduecer = (state = initState, action) => {
                 bid:[+action.bid],
                 originalBid:+action.bid
             }
-
+        case actionTypes.INSURANCE:
+            return {
+                ...state,
+                insurance:true
+            }
+        // case actionTypes.COLLECT_INSURANCE:
+        //     return {
+        //         ...state,
+        //         insurance:false
+        //     }
         case actionTypes.ROUND_STATUS:
             return {...state,
                 roundStatus:action.status

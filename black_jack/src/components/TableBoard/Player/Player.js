@@ -9,7 +9,6 @@ class Player extends Component {
 
   
     componentDidUpdate = () => {
-
         if(this.props.playerCards.length)
         {
             if(this.props.playerCards[this.props.activeDeckNumber].length < 2 && this.props.roundStatus === 'pending')
@@ -20,6 +19,7 @@ class Player extends Component {
         // cards sum is 21 or over
         if(this.props.playerCardsSum[this.props.activeDeckNumber] > 21) {
             this.props.changeHandResult('lost');
+            this.props.markDeckAsFinished(this.props.activeDeckNumber);
         }
         else if (this.props.playerCardsSum[this.props.activeDeckNumber] === 21
             && !this.props.playerCards[this.props.activeDeckNumber].deckFinished) {

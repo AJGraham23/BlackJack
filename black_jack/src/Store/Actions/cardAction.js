@@ -9,19 +9,23 @@ export const devideCardForRoundStart = () => {
         
             setTimeout(() => {
                 let FirstCard={
-                    value:2,
+                    value:11,
                     symbol:'diamond',
-                    Ace: false
+                    Ace: true
                 };
 
                 let SecondCard={
-                    value:3,
+                    value:10,
                     symbol:'club',
                     Ace: false
                 };
                 // let FirstCard = GenerateRandomCard()
                 // let SecondCard = GenerateRandomCard()
-
+                // let dealerSecondCard = {
+                //     value:11,
+                //     symbol:'club',
+                //     Ace: true                    
+                // }
                 let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 
                 let dealerSum = checkCardsSum(dealerCards);

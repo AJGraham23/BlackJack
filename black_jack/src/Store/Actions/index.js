@@ -6,6 +6,7 @@ import { collectProfits } from './gameAction'
 
 export {
     startGame,
+    collectInsurance,
     // changeBudget,
     collectProfits
 } from './gameAction';
@@ -18,7 +19,8 @@ export {
     changeHandResult,
     roundStatus,
     stand,
-    doubleBid
+    doubleBid,
+    makeInsurance
 } from './roundAction';
 
 export {
@@ -92,3 +94,10 @@ export const collectProfitAndInitBid = (profit,bidIndex) => {
         })
     }
 }
+
+
+// export const collectInsurance = () => {
+//     return dispatch => {
+
+//     }
+// }

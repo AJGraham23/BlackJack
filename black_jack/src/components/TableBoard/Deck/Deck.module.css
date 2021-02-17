@@ -19,7 +19,7 @@
 .Cards{
     flex-wrap: wrap;
     height: 100%;
-    width: 130px;
+    /* width: 130px; */
     height: min-content;    
     align-items: flex-start;
     margin: 3px auto;

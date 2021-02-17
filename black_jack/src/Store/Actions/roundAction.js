@@ -86,6 +86,18 @@ export const initDeckBid = (bidDeckIndex) => {
 
 
 
+export const makeInsurance = () => {
+    return {
+        type:actionTypes.INSURANCE
+    }
+}
+
+// export const markInsuranceAsDone = () => {
+//     return {
+//         type:actionTypes.MARK_INSURANCE_AS_DONE
+//     }
+// }
+
 // export const splitAnotherDeck = () => {
 //     return {
 //         type:actionTypes.SPLIT_DECK
