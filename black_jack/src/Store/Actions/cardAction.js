@@ -9,13 +9,13 @@ export const devideCardForRoundStart = () => {
         
             setTimeout(() => {
                 let FirstCard={
-                    value:11,
+                    value:5,
                     symbol:'diamond',
-                    Ace: true
+                    Ace: false
                 };
 
                 let SecondCard={
-                    value:10,
+                    value:5,
                     symbol:'club',
                     Ace: false
                 };
@@ -113,7 +113,7 @@ export const addCard = (holder,NumOfsplits) => {
                     })
                     resolve('add card for deck number:'+NumOfsplits);
                     reject('add card FAILED for deck number:'+NumOfsplits);
-            }, 101);
+            }, 401);
          })
     }
 }
@@ -151,12 +151,19 @@ export const actionPromise = (parameter) => {
 
 
 export const markDeckAsFinished = (deckNumber) => {
-    return {
-        type:actionTypes.MARK_DECK_AS_FINISHED,
-        deckNumber
+    return dispatch => {
+
+        return setTimeout(() => {
+                dispatch({
+                    type:actionTypes.MARK_DECK_AS_FINISHED,
+                    deckNumber
+                })
+            }, 400);
     }
 }
 
 
 // what
 
+// type:actionTypes.MARK_DECK_AS_FINISHED,
+// deckNumber

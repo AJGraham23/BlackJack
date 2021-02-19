@@ -73,6 +73,15 @@ export class Controls extends Component {
         this.props.makeInsurance(); 
     }
 
+    didPlayerFinished = () => {
+        let foundHandNotInStand = this.props.standMode.find(hand => hand === false)
+        if(foundHandNotInStand === undefined)
+            return false;
+        else 
+            return true
+        // let handNotInStand = this.props.stand.find(hand => hand === false)
+    }
+
     areCardsEqual = (cards) => {
         return cards[0].value === cards[1].value;
     }
@@ -93,7 +102,7 @@ export class Controls extends Component {
         && !this.props.standMode[this.props.activeDeckNumber] && numOfPlayerCards === 2 && !this.state.intervalDisable;;
         
         const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble()  
-        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]) && !this.state.intervalDisable;
+        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]) && !this.state.intervalDisable && this.didPlayerFinished();
         
         const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - Math.round(this.props.bid[0]*1.5) > 0) && !this.props.insurance ; 
         

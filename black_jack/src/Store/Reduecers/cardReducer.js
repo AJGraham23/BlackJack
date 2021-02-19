@@ -117,7 +117,8 @@ const reduecer = (state = initState, action) => {
                 dealerCards:action.dealerCards,
                 playerCards:[...state.playerCards ,action.playerCards],
                 playerCardsSum:[...state.playerCardsSum,playerSum],
-                dealerCardsSum:dealerSum
+                dealerCardsSum:dealerSum,
+                activeDeckNumber:0
             }
         case actionTypes.MARK_DECK_AS_FINISHED:
             

@@ -63,6 +63,8 @@ const reduecer = (state = initState, action) => {
                 bid:newBidArray}
         case actionTypes.INIT_ROUND:
             console.log('init game');
+            let what = {...initState};
+            debugger;
             return {
                 ...initState,
             }

@@ -39,7 +39,7 @@ export const initRound = (totalProfit) => {
                     type:actionTypes.INIT_ROUND,
                     totalProfit
                 })
-        }, 2001);
+        }, 401);
     }
 }
 

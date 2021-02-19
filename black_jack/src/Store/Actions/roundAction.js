@@ -21,7 +21,7 @@ export const stand = (activeDeckIndex) => {
                     })
 
                     resolve('stand was triggered on deck '+ activeDeckIndex);
-            }, 101);
+            }, 401);
             
         })
     }
@@ -35,9 +35,22 @@ export const stand = (activeDeckIndex) => {
 // }
 
 export const roundStatus = (status) => {
-    return {
-        type:actionTypes.ROUND_STATUS,
-        status
+    // return {
+    //     type:actionTypes.ROUND_STATUS,
+    //     status
+    // }
+    
+    return dispatch=>
+    {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                dispatch({
+                    type:actionTypes.ROUND_STATUS,
+                    status
+                });
+                resolve('round status will change to: '+ status);
+            }, 400);
+        })
     }
 }
 
@@ -46,26 +59,48 @@ export const doubleBid = (numOfSplits) => {
     return dispatch=>
     {
         return new Promise((resolve, reject) => {
-            
-            dispatch({
-             type:actionTypes.DOUBLE_BID,
-             numOfSplits
-            });
-            resolve('double bid was triggered on deck: '+ numOfSplits);
+            setTimeout(() => {
+                dispatch({
+                 type:actionTypes.DOUBLE_BID,
+                 numOfSplits
+                });
+                resolve('double bid was triggered on deck: '+ numOfSplits);
+            }, 400);
         })
     }
 }
 
 export const changeHandResult = (result) => {
-    return {
-        type: actionTypes.CHANGE_HAND_RESULT,
-        result
+    // return {
+    //     type: actionTypes.CHANGE_HAND_RESULT,
+    //     result
+    // }
+    return dispatch => {
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                dispatch({
+                    type: actionTypes.CHANGE_HAND_RESULT,
+                    result  
+                });
+                resolve('change hand result to :'+result);
+            }, 400);
+        })
     }
 }
 
 export const dealerBust = () => {
-    return {
-        type:actionTypes.DEALER_BUST
+   
+    return dispatch => {
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                dispatch({
+                    type:actionTypes.DEALER_BUST
+                });
+                resolve('dealr busted !');
+            }, 400);
+        })
     }
 }
 
