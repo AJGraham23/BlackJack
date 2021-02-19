@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 class Player extends Component {
 
 
-  
     componentDidUpdate = () => {
         if(this.props.playerCards.length)
         {

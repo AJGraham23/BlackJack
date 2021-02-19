@@ -2,8 +2,7 @@ import React from 'react'
 import classes from './Control.module.css'
 
 const Control = props => {
-    // console.log(props);
-    // debugger;
+
     let disabledClass = props.visibility === 'hidden' ? ' shutDown' :'';
         return (
             <div className={classes.Control + ' ' + (props.visibility === 'hidden' ? classes.shutDown :'') }>

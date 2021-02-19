@@ -93,15 +93,6 @@ const findActiveDeck = (playerCards) => {
 
 
 const reduecer = (state = initState, action) => {
-    // state.playerCards.forEach(playerDecks => {
-    //         debugger
-    //     playerDecks[Symbol.iterator] =  function* () {
-    //         // Write whatever implementation you need
-    //         for(const key in this) {
-    //           yield this[key];
-    //         }
-    //       }
-    // });
 
     switch (action.type) {
         case actionTypes.DEVIDE_STARTING_CARDS:
@@ -143,7 +134,6 @@ const reduecer = (state = initState, action) => {
                 playerCards:newPlayerCardsArray
             }
         case actionTypes.ADD_CARD:
-            // debugger;
             let activeDeckIndex = findActiveDeck(state.playerCards);
             if(activeDeckIndex === -1)
                 activeDeckIndex = state.playerCards.length - 1;

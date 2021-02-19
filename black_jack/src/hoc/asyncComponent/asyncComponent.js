@@ -5,7 +5,6 @@ import React from 'react';
 function asyncComponent(WrappedComponent) {
   return class extends React.Component {
     render() {
-      // debugger;
       let hasProps = true;
       if(!this.props.playerCards.length)
         hasProps = false;

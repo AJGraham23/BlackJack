@@ -31,7 +31,6 @@ export class Dealer extends Component {
     }
 
     componentDidUpdate = () => {
-        // debugger;
         if(
              this.checkIfallPlayersDeckAreDone(this.props.handsResult)
          )

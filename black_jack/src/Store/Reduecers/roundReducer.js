@@ -40,7 +40,6 @@ const reduecer = (state = initState, action) => {
                 roundStatus:action.status
             }
         case actionTypes.INIT_ROUND_BID:
-            // debugger;
             let newBidsArray = state.bid.map((bidAmount,bidIndex)=> {
                 if(bidIndex === action.deckIndex)
                     return 0
@@ -50,7 +49,6 @@ const reduecer = (state = initState, action) => {
             return {...state,bid:newBidsArray}
 
         case actionTypes.DOUBLE_BID:
-            // debugger;
 
             let newBidArray = state.bid.map((bidAmount,index)=>{
                 if(index === action.numOfSplits)
@@ -64,7 +62,6 @@ const reduecer = (state = initState, action) => {
         case actionTypes.INIT_ROUND:
             console.log('init game');
             let what = {...initState};
-            debugger;
             return {
                 ...initState,
             }
@@ -133,7 +130,6 @@ const reduecer = (state = initState, action) => {
             //         split:newSplitValue
             //     }
         case actionTypes.SPLIT_DECK:
-            // debugger;
             return {
                 ...state,
                 split:action.numOfSplits,

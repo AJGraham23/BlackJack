@@ -15,11 +15,9 @@ const reduecer = (state = initState, action) => {
         case actionTypes.COLLECT_INSURANCE:
                 return {...state, budget:state.budget + action.insuracneAmount}
         case actionTypes.COLLECT_PROFITS:
-            // debugger;
                 return {...state, budget:state.budget + action.profit}
         case actionTypes.INIT_ROUND:
             console.log('init game');
-            // debugger;
             // let newBudget = action.totalProfit + state.budget;
             let lost = state.budget === 0;
             return {

@@ -21,12 +21,18 @@ export const devideCardForRoundStart = () => {
                 };
                 // let FirstCard = GenerateRandomCard()
                 // let SecondCard = GenerateRandomCard()
-                // let dealerSecondCard = {
-                //     value:11,
-                //     symbol:'club',
-                //     Ace: true                    
-                // }
-                let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
+                let dealerSecondCard = {
+                    value:10,
+                    symbol:'club',
+                    Ace: false                    
+                }
+                let dealerFirstCard = {
+                    value:6,
+                    symbol:'heart',
+                    Ace:false
+                }
+                let dealerCards = [dealerFirstCard,dealerSecondCard];
+                // let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 
                 let dealerSum = checkCardsSum(dealerCards);
                 if(FirstCard.value > 10)

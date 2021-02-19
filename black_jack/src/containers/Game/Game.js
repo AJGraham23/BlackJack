@@ -80,9 +80,11 @@ const Game = (props) => {
                     totalProfit+= props.roundBids[index];   
                     props.collectProfitAndInitBid(props.roundBids[+index],+index) 
                 }
-                else console.log('hand ' + (+index) + 'lost');
+                else {
+                    console.log('hand ' + (+index) + 'lost');
                     totalProfit-= props.roundBids[index];   
-                    props.collectProfitAndInitBid(-props.roundBids[+index],+index) 
+                    props.collectProfitAndInitBid(-props.roundBids[+index],+index);
+                }
             }
             props.initRound();
         }
@@ -95,7 +97,6 @@ const Game = (props) => {
             console.log(props);
             if(!props.dealerSum && props.roundStatus === 'pending')
             {
-                // debugger;
                 props.devideStartingCards();
             }
         }

@@ -38,7 +38,6 @@ export class Money extends Component {
 
     render() {
         // calc budget left 
-        // debugger;
         let totalBids = +this.props.roundbid.reduce((a,b)=> a+b,0);
         
         if(this.props.roundbid[0])

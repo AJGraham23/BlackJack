@@ -16,18 +16,8 @@ export class Controls extends Component {
         intervalDisable:false
     }
 
-    // shouldComponentUpdate = (nextProps,nextState) => {
-    //     return true;
-    // }
-
+ 
     doublingBid = () => {
-        // console.log(this.props.bamba);
-        // this.props.actionPromise('shawarma').then(data=>
-        //     {
-        //         console.log(data);
-        //         console.log(this.props.bamba);
-        //     })
-        // this.setState({disbaleButtons:true})
         this.disableDoubleClcicks();
         this.props.doubleOperation(this.props.activeDeckNumber);
     }
@@ -120,31 +110,7 @@ export class Controls extends Component {
 
     render() {
         console.count();
-        // // debugger;
-        // let numOfPlayerCards = this.props.playerCards[this.props.activeDeckNumber].length;
-        
-        // const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
-        
-        // const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
-        
-        // const doubleButtonVisibility = this.playerCanDouble() && this.props.roundStatus === 'pending'
-        // && !this.props.standMode[this.props.activeDeckNumber] && numOfPlayerCards === 2 && !this.state.intervalDisable;;
-        
-        // const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble()  
-        // && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]) && !this.state.intervalDisable;
-        
-        // // const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - this.props.bid[0]*1.5) && !this.props.insurance; 
-        
-        // let newButtonState = {
-        //     hitButton:hitButtonVisibility,
-        //     doubleButton:doubleButtonVisibility,
-        //     splitButton:splitButtonVisibility,
-        //     standButton:standButtonVisibility,
-        //     // insuranceButton:InsuranceButtonVisibility
-        // }
-        // // let aaa = "arik like to eat pizza".replace( /to eat (pizza|banan)/,'')
-        // if(( JSON.stringify(newButtonState) !== JSON.stringify(this.state).replace(/,"intervalDisable":(false|true)/,'')))
-        //     this.setState(()=>({...newButtonState}));
+     
         console.log(this.state);
         return (
             <div className={classes.Controls}>
