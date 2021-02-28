@@ -13,9 +13,32 @@ const initState = {
     insurance:false
 }
 
+const orderStandArray = (standArray ,indexToSwitch = 10) => {
+
+    
+
+    return standArray.map((standStatus,index)=>{
+        // if(index === action.activeDeckIndex)
+        // if(index === action.activeDeckIndex)
+        //     return stand
+        // else return standStatus
+        switch (index) {
+            case indexToSwitch:
+                return standArray[standArray.length-1];
+            case standArray.length-1:
+                return true;
+                
+            default:
+                return standStatus;
+                break;
+        }
+    });
+
+}
+
 
 const reduecer = (state = initState, action) => {
-
+    let newStandArray;
     switch (action.type) {
         case actionTypes.START_ROUND:
             return {
@@ -67,39 +90,33 @@ const reduecer = (state = initState, action) => {
             }
         
         case actionTypes.STAND:
-            let newStandArray = state.stand.map((standStatus,index)=>{
-                if(index === action.activeDeckIndex)
-                    return true
-                else return standStatus
-            });
-            let newSplit = state.split;
-            if(newSplit)
-            newSplit = state.split - 1;
+            let foundNotFinishedDeck = state.handsResult.find(element => element === '');
+            if(foundNotFinishedDeck === '')
+            {
+                newStandArray = orderStandArray(state.stand,0);
+                let newSplit = state.split;
+                if(newSplit)
+                newSplit = state.split - 1;
+                
+                // isPlayingHandExist = false;
+                let updatedHandsResult = state.handsResult.map((result,index)=> {
+                    // if(result === '' && index !== state.split) 
+                    //     isPlayingHandExist = true;
+                    // if(index === state.split)
+                    if(index === action.activeDeckIndex)
+                        return state.handsResult[state.handsResult.length-1]
+                    else if(index === state.handsResult.length-1)
+                        return 'decision';
+                    else return result;
+                })
+                
+                return {...state,
+                    stand:newStandArray,
+                    split:newSplit,
+                    handsResult:updatedHandsResult,    
+                }
             
-            // isPlayingHandExist = false;
-            let updatedHandsResult = state.handsResult.map((result,index)=> {
-                // if(result === '' && index !== state.split) 
-                //     isPlayingHandExist = true;
-                // if(index === state.split)
-                if(index === action.activeDeckIndex)
-                    return 'decision';
-                else return result;
-            })
-            
-            return {...state,
-                stand:newStandArray,
-                split:newSplit,
-                handsResult:updatedHandsResult,    
             }
-            // if(isPlayingHandExist)
-            // else 
-            //     return {
-            //         ...state,
-            //         stand:newStandArray,
-            //         split:newSplit,
-            //         handsResult:updatedHandsResult,
-            //         // roundStatus:'decision'
-            //     }
         
         case actionTypes.CHANGE_HAND_RESULT:
             // console.log('init game');
@@ -108,13 +125,27 @@ const reduecer = (state = initState, action) => {
             if(newSplitValue)
             newSplitValue = state.split - 1;
 
+            // check if it's the last deck
+            let isLastDeck ;
+            let countUnfinishedDecks=0;
+            for (let index = 0; index < state.handsResult.length; index++) {
+                if(state.handsResult[index] === '')
+                    countUnfinishedDecks++;
+            }
+
+            isLastDeck = countUnfinishedDecks > 1 ? false : true ;
+
             // isPlayingHandExist = false;
             let newHandsResult = state.handsResult.map((result,index)=> {
                 // if(result === '' && index !== state.split)
                 //     isPlayingHandExist = true;
-                if(index === state.split)
-                    return action.result;
-                else return result;
+                    if(result === '' && isLastDeck)
+                        return action.result;
+                    else if(index === 0 && !isLastDeck)
+                        return state.handsResult[state.handsResult.length-1]
+                    else if(index === state.handsResult.length-1)
+                        return action.result;
+                    else return result;
             })
             return {
                 ...state,
@@ -130,6 +161,8 @@ const reduecer = (state = initState, action) => {
             //         split:newSplitValue
             //     }
         case actionTypes.SPLIT_DECK:
+            // newStandArray = orderStandArray(state.stand.concat(false))
+
             return {
                 ...state,
                 split:action.numOfSplits,

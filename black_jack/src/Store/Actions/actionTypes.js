@@ -22,5 +22,6 @@ export const ADD_CARD = 'ADD_CARD';
 export const CHANGE_CARDS_SUM = 'CHANGE_CARDS_SUM';
 export const DOUBLE_BID = 'DOUBLE_BID';
 export const SPLIT_DECK = 'SPLIT_DECK';
+export const REMOVE_DECK = 'REMOVE_DECK';
 export const MARK_DECK_AS_FINISHED = 'MARK_DECK_AS_FINISHED';
 

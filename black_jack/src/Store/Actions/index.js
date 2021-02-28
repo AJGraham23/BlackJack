@@ -28,7 +28,8 @@ export {
     addCard,
     changeDeckSum,
     markDeckAsFinished,
-    actionPromise
+    actionPromise,
+    removeDeck
 } from './cardAction';
 
 export const initRound = (totalProfit) => {

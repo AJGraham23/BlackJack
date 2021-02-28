@@ -19,13 +19,13 @@ export class Controls extends Component {
  
     doublingBid = () => {
         this.disableDoubleClcicks();
-        this.props.doubleOperation(this.props.activeDeckNumber);
+        this.props.doubleOperation(0);
     }
     
    
     playerCanDouble = () => {
         let totalBidsSum = this.props.bid.reduce((a,b)=>a+b)    
-        return  this.props.budget -totalBidsSum - this.props.bid[this.props.activeDeckNumber] > -0.1 
+        return  this.props.budget -totalBidsSum - this.props.bid[0] > -0.1 
         ? true : false;
     }
 
@@ -54,8 +54,8 @@ export class Controls extends Component {
     standClicked = () => {
         // this.setState({disbaleButtons:true})
         this.disableDoubleClcicks();
-        this.props.toStand(this.props.activeDeckNumber);
-        this.props.markDeckAsFinished(this.props.activeDeckNumber)
+        this.props.toStand(0);
+        this.props.markDeckAsFinished(0)
     }
 
     clickMakeInsurance = () => {
@@ -82,17 +82,17 @@ export class Controls extends Component {
         this.updateControls();
     }
     updateControls = () => {
-        let numOfPlayerCards = this.props.playerCards[this.props.activeDeckNumber].length;
+        let numOfPlayerCards = this.props.playerCards[0].length;
         
-        const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
+        const hitButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[0] && !this.state.intervalDisable;
         
-        const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[this.props.activeDeckNumber] && !this.state.intervalDisable;
+        const standButtonVisibility  = this.props.roundStatus === 'pending' && !this.props.standMode[0] && !this.state.intervalDisable;
         
         const doubleButtonVisibility = this.playerCanDouble() && this.props.roundStatus === 'pending'
-        && !this.props.standMode[this.props.activeDeckNumber] && numOfPlayerCards === 2 && !this.state.intervalDisable;;
+        && !this.props.standMode[0] && numOfPlayerCards === 2 && !this.state.intervalDisable;;
         
         const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble()  
-        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[this.props.activeDeckNumber]) && !this.state.intervalDisable && this.didPlayerFinished();
+        && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[0]) && !this.state.intervalDisable && this.didPlayerFinished();
         
         const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - Math.round(this.props.bid[0]*1.5) > 0) && !this.props.insurance ; 
         
@@ -120,7 +120,7 @@ export class Controls extends Component {
                     visibility = {this.state.hitButton ? 'visible':'hidden'}
                     clicked={(e)=> {
                        this.disableDoubleClcicks();
-                        this.props.giveOneMoreCard(this.props.activeDeckNumber)
+                        this.props.giveOneMoreCard(0)
                     }}
                 >Hit
                 </Control>
@@ -164,7 +164,7 @@ export class Controls extends Component {
 
 const MapStateToProps = state => {
     return {
-        lit : state.round.split,
+        // lit : state.round.split,
         bid : state.round.bid,
         budget : state.game.budget,
         standMode : state.round.stand,
@@ -173,7 +173,7 @@ const MapStateToProps = state => {
         dealerCards : state.cards.dealerCards,
         bamba : state.cards.bamba,
         insurance : state.round.insurance,
-        activeDeckNumber : state.cards.activeDeckNumber
+        // activeDeckNumber : state.cards.activeDeckNumber
 
         
         

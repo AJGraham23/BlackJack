@@ -64,6 +64,8 @@ const Game = (props) => {
                         totalProfit-= props.roundBids[index];
                         props.collectProfitAndInitBid(-props.roundBids[+index],+index)
                     }
+
+                    props.removeDeck(index);
                 }
             props.initRound();
         }
@@ -85,6 +87,8 @@ const Game = (props) => {
                     totalProfit-= props.roundBids[index];   
                     props.collectProfitAndInitBid(-props.roundBids[+index],+index);
                 }
+
+                props.removeDeck(index);
             }
             props.initRound();
         }
@@ -162,7 +166,8 @@ const mapDistpatchToProps = dispatch => {
         devideStartingCards : () => dispatch(actions.devideCardForRoundStart()),
         collectInsurance : (insuranceAmount) => dispatch(actions.collectInsurance(insuranceAmount)),
         // collectProfit : (profit) => dispatch(actions.collectProfits(profit)),
-        collectProfitAndInitBid : (profit,bidIndex) => dispatch(actions.collectProfitAndInitBid(profit,bidIndex))
+        collectProfitAndInitBid : (profit,bidIndex) => dispatch(actions.collectProfitAndInitBid(profit,bidIndex)),
+        removeDeck : (deckNumber) => dispatch(actions.removeDeck(deckNumber))
         
     }
 }

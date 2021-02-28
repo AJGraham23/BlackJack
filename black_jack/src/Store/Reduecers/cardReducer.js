@@ -6,6 +6,7 @@ const initState = {
     playerCards:[],
     playerCardsSum:[],
     activeDeckNumber:0,
+    preActiveDeckNumber:0,
     bamba:'bamba'
 }
 
@@ -89,7 +90,33 @@ const findActiveDeck = (playerCards) => {
 }
 
 
+const orderCardsDecks = (cardsDeck,playerDecksSum,deckNumberToSwitch) => {
+    let OrderedCards = cardsDeck.map((deck,index)=> {
+        switch (index) {
+            case 0:
+                return cardsDeck[deckNumberToSwitch]    
+            case deckNumberToSwitch:
+                return cardsDeck[0]
+            default:
+                return deck;
+        }       
+    });
 
+    let OrderedSum = playerDecksSum.map((sum,index)=> {
+        switch (index) {
+            case 0:
+                return playerDecksSum[deckNumberToSwitch]    
+                break;
+            case deckNumberToSwitch:
+                return playerDecksSum[0]
+            default:
+                return sum;
+                break;
+        }       
+    });
+
+    return { OrderedCards , OrderedSum };
+}
 
 
 const reduecer = (state = initState, action) => {
@@ -109,7 +136,28 @@ const reduecer = (state = initState, action) => {
                 playerCards:[...state.playerCards ,action.playerCards],
                 playerCardsSum:[...state.playerCardsSum,playerSum],
                 dealerCardsSum:dealerSum,
-                activeDeckNumber:0
+                activeDeckNumber:0,
+                preActiveDeckNumber:0
+            }
+
+        case actionTypes.REMOVE_DECK:
+            let newPlayerCardsDeckArray = state.playerCards.filter((deck,deckIndex)=> {
+                if(+action.deckNumber !== +deckIndex)
+                    return deck;
+                    
+            });
+            let newPlayerSumCardsDecks = state.playerCardsSum.filter((sum,sumIndex)=> {
+                if(+action.deckNumber !== +sumIndex)
+                    return sum;
+                    
+            });
+            let newActiveDeck = newPlayerCardsDeckArray.length -1;
+            return {
+                ...state,
+                activeDeckNumber:newActiveDeck,
+                playerCards:newPlayerCardsDeckArray,
+                playerCardsSum:newPlayerSumCardsDecks
+
             }
         case actionTypes.MARK_DECK_AS_FINISHED:
             
@@ -121,20 +169,30 @@ const reduecer = (state = initState, action) => {
                 }
                 return deck;
             })
-            
+            let preActiveDeckNumber = state.activeDeckNumber;
             let activeDeckNum = findActiveDeck(newPlayerCardsArray);
-            //in a case where all the decks are finished just pick with the last one
+            //in a case where all the decks are finished just pick the last deck that was active
+            // and re-order the cards decks
+            let orderedCards = {    OrderedCards:state.playerCards , OrderedSum:state.playerCardsSum  };
             if(activeDeckNum === -1)
-                activeDeckNum = state.playerCards.length - 1;
+            {
+                // activeDeckNum = state.playerCards.length - 1;
+                activeDeckNum = state.preActiveDeckNumber;
+            }
+            else
+                orderedCards= orderCardsDecks(state.playerCards,state.playerCardsSum,activeDeckNum);
                 // ddd
 
             return {
                 ...state,
                 activeDeckNumber:activeDeckNum,
-                playerCards:newPlayerCardsArray
+                preActiveDeckNumber:preActiveDeckNumber,
+                playerCards:orderedCards.OrderedCards,
+                playerCardsSum:orderedCards.OrderedSum
             }
         case actionTypes.ADD_CARD:
             let activeDeckIndex = findActiveDeck(state.playerCards);
+            activeDeckIndex = 0;
             if(activeDeckIndex === -1)
                 activeDeckIndex = state.playerCards.length - 1;
             let sum ;
@@ -208,6 +266,7 @@ const reduecer = (state = initState, action) => {
             }
         case actionTypes.SPLIT_DECK:
            
+            
             // find active Deck
             let activeDeck = findActiveDeck(state.playerCards);
             if(activeDeck === -1)
@@ -241,11 +300,14 @@ const reduecer = (state = initState, action) => {
                     return el/2
                 else return el;
             })
+
+            let orderedPlayerCards = orderCardsDecks(newPlayerCards,newPlayerSumCards,newPlayerCards.length-1);
             return {
                 ...state,
-                playerCards:newPlayerCards,
-                playerCardsSum:newPlayerSumCards,
-                activeDeckNumber:newPlayerCards.length - 1
+                playerCards:orderedPlayerCards.OrderedCards,
+                playerCardsSum:orderedPlayerCards.OrderedSum,
+                activeDeckNumber:newPlayerCards.length - 1,
+                preActiveDeckNumber:state.activeDeckNumber
                 
             }
         default:

@@ -105,6 +105,11 @@ export const addCard = (holder,NumOfsplits) => {
                 //     symbol:'club',
                 //     Ace: false
                 // };
+                card ={
+                    value:5,
+                    symbol:'club',
+                    Ace: false
+                };
                 if (card.value > 10)
                     card.value = 10;
                 if(card.Ace)
@@ -155,6 +160,16 @@ export const actionPromise = (parameter) => {
     }
 }
 
+export const removeDeck = (deckNumber) => {
+    return dispatch => {
+        return setTimeout(() => {
+            dispatch({
+                type:actionTypes.REMOVE_DECK,
+                deckNumber
+            })
+        }, 200);
+    }
+}
 
 export const markDeckAsFinished = (deckNumber) => {
     return dispatch => {
