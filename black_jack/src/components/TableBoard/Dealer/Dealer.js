@@ -78,6 +78,7 @@ export class Dealer extends Component {
                         toHide={true}
                         deckCards = {this.props.dealerDeck}
                         deckSum = {this.props.dealerCardsSum}
+                        dealer
                     >
                     </Deck> :''}
                 </div>

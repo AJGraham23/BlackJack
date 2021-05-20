@@ -192,6 +192,7 @@ const reduecer = (state = initState, action) => {
             }
         case actionTypes.ADD_CARD:
             let activeDeckIndex = findActiveDeck(state.playerCards);
+            // debugger;
             activeDeckIndex = 0;
             if(activeDeckIndex === -1)
                 activeDeckIndex = state.playerCards.length - 1;

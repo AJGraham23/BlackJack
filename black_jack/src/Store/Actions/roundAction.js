@@ -19,8 +19,8 @@ export const stand = (activeDeckIndex) => {
                         stand:true,
                         activeDeckIndex
                     })
-
-                    resolve('stand was triggered on deck '+ activeDeckIndex);
+                    //    'stand was triggered on deck ' : <activeDeckIndex>
+                    resolve(+ activeDeckIndex);
             }, 401);
             
         })

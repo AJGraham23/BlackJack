@@ -33,7 +33,7 @@ class Deck extends Component {
                             {cards}
                     </div>
                 </div>
-                <span>{this.props.deckNumber}: </span>
+                <span>{!this.props.dealer ? this.props.deckNumber + ':' : ''} </span>
                 <p>sum:{this.props.deckSum}</p>
             </div>
         )

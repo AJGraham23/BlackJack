@@ -90,6 +90,16 @@ const reduecer = (state = initState, action) => {
             }
         
         case actionTypes.STAND:
+            // debugger;
+            if(state.stand.length === 1)
+            {
+                return {
+                    ...state,
+                    stand:[true],
+                    // split:newSplit,
+                    handsResult:['decision'],    
+                }
+            }
             let foundNotFinishedDeck = state.handsResult.find(element => element === '');
             if(foundNotFinishedDeck === '')
             {
