@@ -13,9 +13,17 @@ const initState = {
     insurance:false
 }
 
-const orderStandArray = (standArray ,indexToSwitch = 10) => {
+const orderStandArray = (standArray ,indexToSwitch = 0) => {
 
-    
+    // find index of "false" in standArray
+    let subtitutedIndex = standArray.findIndex((standValue,index) => { 
+        if(index!== 0)    
+            return standValue==false
+        
+    })
+
+    if(subtitutedIndex === -1)
+        subtitutedIndex = 0;
 
     return standArray.map((standStatus,index)=>{
         // if(index === action.activeDeckIndex)
@@ -24,16 +32,47 @@ const orderStandArray = (standArray ,indexToSwitch = 10) => {
         // else return standStatus
         switch (index) {
             case indexToSwitch:
-                return standArray[standArray.length-1];
-            case standArray.length-1:
+                
+                // return standArray[standArray.length-1];
+                if(subtitutedIndex==0)
+                    return true
+                else
+                    return standArray[subtitutedIndex];
+            case subtitutedIndex:
                 return true;
                 
             default:
                 return standStatus;
-                break;
         }
     });
 
+}
+
+
+const orderHandResultArray = (resultsArray,activeDeckIndex) => {
+    let subtitutedIndex = resultsArray.findIndex((resultValue,index) => { 
+        if(index!== 0)    
+            return resultValue==""
+        
+    });
+
+    if(subtitutedIndex === -1)
+    subtitutedIndex = 0;
+
+
+    let updatedHandsResult = resultsArray.map((result,index)=> {
+        // if(result === '' && index !== state.split) 
+        //     isPlayingHandExist = true;
+        // if(index === state.split)
+        if(index === activeDeckIndex)
+            return resultsArray[resultsArray.length-1]
+        // else if(index === resultsArray.length-1)
+        else if(index === subtitutedIndex)
+            return 'decision';
+        else return result;
+    });
+
+    return updatedHandsResult;
 }
 
 
@@ -103,22 +142,26 @@ const reduecer = (state = initState, action) => {
             let foundNotFinishedDeck = state.handsResult.find(element => element === '');
             if(foundNotFinishedDeck === '')
             {
-                newStandArray = orderStandArray(state.stand,0);
+                newStandArray = orderStandArray(state.stand);
                 let newSplit = state.split;
                 if(newSplit)
                 newSplit = state.split - 1;
                 
                 // isPlayingHandExist = false;
-                let updatedHandsResult = state.handsResult.map((result,index)=> {
-                    // if(result === '' && index !== state.split) 
-                    //     isPlayingHandExist = true;
-                    // if(index === state.split)
-                    if(index === action.activeDeckIndex)
-                        return state.handsResult[state.handsResult.length-1]
-                    else if(index === state.handsResult.length-1)
-                        return 'decision';
-                    else return result;
-                })
+
+                let updatedHandsResult = orderHandResultArray(state.handsResult,action.activeDeckIndex)
+                // let updatedHandsResult = state.handsResult.map((result,index)=> {
+                //     // if(result === '' && index !== state.split) 
+                //     //     isPlayingHandExist = true;
+                //     // if(index === state.split)
+                //     if(index === action.activeDeckIndex)
+                //         return state.handsResult[state.handsResult.length-1]
+                //     else if(index === state.handsResult.length-1)
+                //         return 'decision';
+                //     else return result;
+                // })
+
+                
                 
                 return {...state,
                     stand:newStandArray,

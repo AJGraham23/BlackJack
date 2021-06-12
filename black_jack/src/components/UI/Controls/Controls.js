@@ -103,6 +103,8 @@ export class Controls extends Component {
             standButton:standButtonVisibility,
             insuranceButton:InsuranceButtonVisibility
         }
+
+        
         // let aaa = "arik like to eat pizza".replace( /to eat (pizza|banan)/,'')
         if(( JSON.stringify(newButtonState) !== JSON.stringify(this.state).replace(/,"intervalDisable":(false|true)/,'')))
             this.setState(()=>({...newButtonState}));

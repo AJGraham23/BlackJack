@@ -34,22 +34,6 @@
     color: blue;
 }
 
-/* 
-.activeDeck {
-    width: 100%;
-    order: 1;
-    box-shadow: rgba(14, 53, 5, 0.56) 0px 22px 70px 4px;
-    padding: 15px;
-    
-}
-
-.disActiveDeck {
-    box-shadow: initial;
-    padding: initial;
-    box-shadow: initial;
-    background-color: red;
-    background-color: initial;
-} */
 
 .alignCards {
     display: flex;
@@ -60,7 +44,3 @@
 span{
     margin: auto;
 }
-/* .Card {
-    align-items: center;
-    margin: auto;
-} */

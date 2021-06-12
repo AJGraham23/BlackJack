@@ -15,7 +15,7 @@ export class Dealer extends Component {
             if(!stand)
                 return false
         }
-        return true
+        return true;
     }
 
    
