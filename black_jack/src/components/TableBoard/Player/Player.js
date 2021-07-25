@@ -14,18 +14,22 @@ class Player extends Component {
             {
                     this.props.giveOneMoreCard(0);
             }
-        }
-        // cards sum is 21 or over
-        if(this.props.playerCardsSum[0] > 21) {
-            this.props.changeHandResult('lost');
-            this.props.markDeckAsFinished(0);
-        }
-        else if (this.props.playerCardsSum[0] === 21
-            && !this.props.playerCards[0].deckFinished) {
-            console.log('enable stand mode');
-            this.props.toStand(0);
-            this.props.markDeckAsFinished(0);
-            
+        
+            // cards sum is 21 or over
+            if(this.props.playerCardsSum[0] > 21) {
+                debugger;
+                console.log('changing handresult - player.js')
+                // this.props.changeHandResult('lost');
+                this.props.markDeckAsFinished(0);
+                this.props.toStand(0);
+            }
+            else if (this.props.playerCardsSum[0] === 21
+                && !this.props.playerCards[0].deckFinished) {
+                console.log('enable stand mode');
+                this.props.toStand(0);
+                this.props.markDeckAsFinished(0);
+                
+            }
         }
     }
 
@@ -98,6 +102,7 @@ const MapStateToprops = state => {
         // activeDeckNumber : state.cards.activeDeckNumber,
         playerCards : state.cards.playerCards,
         playerCardsSum : state.cards.playerCardsSum,
+        
 
     }
 }

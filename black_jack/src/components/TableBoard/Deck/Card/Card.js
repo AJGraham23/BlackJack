@@ -50,18 +50,24 @@ function Card(props) {
     //     colour = 'red'
 
     
-    let CardClass = `${classes.Card} ${props.Hiden ? classes.Hiden : ''}`
+    let CardClass = `${classes.Card}` + ` ` + `${props.Hiden ? classes.Hiden : ''}`
     let cardActiveClass = `${props.markCard ? classes.active:classes.disActive}`;
     return (
-        <div className={CardClass + ' ' + props.newLine + ' ' + cardActiveClass} style={{'color':colour}}>
+        <div className={CardClass + ' ' + props.newLine + ' ' + cardActiveClass + (props.Hiden ? classes.Hiden : '')} style={{'color':colour}}>
             <div className={classes.Value } >
-                <span style={{'display':`${props.Hiden ? 'none' : true}`}}>
-                    {cardNumber}
+                <span 
+                    // style={{'display':`${props.Hiden ? 'none' : true}`}}
+                    // className={props.Hiden ? classes.Hiden : ''}
+                >
+                    {props.Hiden ? '' : cardNumber}
                 </span>
             </div>
             <div className={classes.Suit}>
-                <span style={{'display':`${props.Hiden ? 'none' : true}`}}>
-                      {cardSuit}
+                <span 
+                    // style={{'display':`${props.Hiden ? 'none' : true}`}}
+                    // className={props.Hiden ? classes.Hiden : ''}
+                >
+                      {props.Hiden ? '' : cardSuit}
                 </span>
             </div>
         </div>

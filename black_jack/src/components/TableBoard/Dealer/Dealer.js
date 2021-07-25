@@ -8,7 +8,8 @@ export class Dealer extends Component {
 
 
     state = {
-        numOfRequestForCard:0
+        numOfRequestForCard:0,
+        showCard:true
     }
     checkIfallPlayersDeckAreDone = (standArray) => {
         for (const stand of standArray) {
@@ -18,7 +19,12 @@ export class Dealer extends Component {
         return true;
     }
 
-   
+    DidPlayerFinished = () => {
+        if(this.props.handsResult.find(result => result === '') == '')
+            return false
+        else
+            return true;
+    }
    
     shouldComponentUpdate = (nextProps,nextState) => {
         if(!nextProps.dealerDeck.length)
@@ -55,9 +61,10 @@ export class Dealer extends Component {
                         }
                     break;
                         
+                // case this.props.dealerCardsSum == 21:
                 default:
-                           
-                            this.props.changeRoundStatus('decision');
+                            if(this.props.roundStatus == 'pending')                           
+                                this.props.changeRoundStatus('decision');
                             if(this.state.numOfRequestForCard)     
                                 this.setState({
                                     numOfRequestForCard:0
@@ -65,7 +72,15 @@ export class Dealer extends Component {
                     break;
             }
         }
+        // debugger;
+        if(this.DidPlayerFinished() && !this.state.showCard && this.props.dealerDeck.length == 2) 
+            this.setState({showCard:true})
+        
+        else if(!this.props.dealerDeck.length && this.state.showCard)
+            this.setState({showCard:false})
+
     }
+
 
     render() {
         return (
@@ -74,7 +89,7 @@ export class Dealer extends Component {
                 <h2>Diller's hand</h2>
                 {this.props.dealerCardsSum ?
                     <Deck
-                        // HideDealerCard 
+                        HideDealerCard ={!this.state.showCard}
                         toHide={true}
                         deckCards = {this.props.dealerDeck}
                         deckSum = {this.props.dealerCardsSum}
@@ -94,6 +109,7 @@ const MapStateToProps = state => {
         dealerDeck : state.cards.dealerCards,
         handsResult : state.round.handsResult,
         dealerCardsSum:state.cards.dealerCardsSum,
+        roundStatus:state.round.roundStatus
         
 
         

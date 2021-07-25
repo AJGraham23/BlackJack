@@ -19,7 +19,7 @@ export class Controls extends Component {
  
     doublingBid = () => {
         this.disableDoubleClcicks();
-        this.props.doubleOperation(0);
+        this.props.doubleOperation(0,this.props.playerCards);
     }
     
    
@@ -188,10 +188,10 @@ const mapDistpatchToProps = dispatch => {
         giveOneMoreCard : (activeDeckNumber) => dispatch(actions.addCard('player',activeDeckNumber)),
         toStand : (activeDeckNumber) => dispatch(actions.stand(activeDeckNumber)),
         markDeckAsFinished : (activeDeckNumber) => dispatch(actions.markDeckAsFinished(activeDeckNumber)),
-        doubleBid : (activeDeckNumber) => dispatch(actions.doubleBid(activeDeckNumber)),
+        // doubleBid : (activeDeckNumber) => dispatch(actions.doubleBid(activeDeckNumber)),
         splitDecks : (activeDeckNumber) => dispatch(actions.splitAnotherDeck(activeDeckNumber)),
         actionPromise : (activeDeckNumber) => dispatch(actions.actionPromise(activeDeckNumber)),
-        doubleOperation : (activeDeckNumber) => dispatch(actions.doubleOperation(activeDeckNumber)),
+        doubleOperation : (activeDeckNumber,playerCards) => dispatch(actions.doubleOperation(activeDeckNumber,playerCards)),
         makeInsurance : () => dispatch(actions.makeInsurance())
 
     }

@@ -21,7 +21,7 @@ export const stand = (activeDeckIndex) => {
                     })
                     //    'stand was triggered on deck ' : <activeDeckIndex>
                     resolve(+ activeDeckIndex);
-            }, 401);
+            }, 300);
             
         })
     }
@@ -49,7 +49,7 @@ export const roundStatus = (status) => {
                     status
                 });
                 resolve('round status will change to: '+ status);
-            }, 400);
+            }, 300);
         })
     }
 }
@@ -61,11 +61,13 @@ export const doubleBid = (numOfSplits) => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 dispatch({
+                //  type:actionTypes.DOUBLE_BID,
                  type:actionTypes.DOUBLE_BID,
-                 numOfSplits
+                 numOfSplits,
+                //  holder:'player'
                 });
                 resolve('double bid was triggered on deck: '+ numOfSplits);
-            }, 400);
+            }, 300);
         })
     }
 }
@@ -84,7 +86,7 @@ export const changeHandResult = (result) => {
                     result  
                 });
                 resolve('change hand result to :'+result);
-            }, 400);
+            }, 300);
         })
     }
 }
@@ -99,7 +101,7 @@ export const dealerBust = () => {
                     type:actionTypes.DEALER_BUST
                 });
                 resolve('dealr busted !');
-            }, 400);
+            }, 300);
         })
     }
 }

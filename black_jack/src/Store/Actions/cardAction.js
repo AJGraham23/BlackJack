@@ -8,30 +8,44 @@ export const devideCardForRoundStart = () => {
 
         
             setTimeout(() => {
-                let FirstCard={
-                    value:5,
+                // let FirstCard={
+                //     value:5,
+                //     symbol:'diamond',
+                //     Ace: false
+                // };
+
+                // let SecondCard={
+                //     value:5,
+                //     symbol:'club',
+                //     Ace: false
+                // };
+                let FirstCard = GenerateRandomCard()
+                let SecondCard = GenerateRandomCard()
+                FirstCard={
+                    value:7,
                     symbol:'diamond',
                     Ace: false
                 };
 
-                let SecondCard={
-                    value:5,
+                SecondCard={
+                    value:7,
                     symbol:'club',
                     Ace: false
                 };
-                // let FirstCard = GenerateRandomCard()
-                // let SecondCard = GenerateRandomCard()
-                let dealerSecondCard = {
-                    value:10,
-                    symbol:'club',
-                    Ace: false                    
-                }
-                let dealerFirstCard = {
-                    value:6,
-                    symbol:'heart',
-                    Ace:false
-                }
-                let dealerCards = [dealerFirstCard,dealerSecondCard];
+
+                // let dealerSecondCard = {
+                //     value:10,
+                //     symbol:'club',
+                //     Ace: false                    
+                // }
+                // let dealerFirstCard =
+                //  {
+                //     value:6,
+                //     symbol:'heart',
+                //     Ace:false
+                // }
+                // let dealerCards = [dealerFirstCard,dealerSecondCard];
+                let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 // let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 
                 let dealerSum = checkCardsSum(dealerCards);
@@ -55,7 +69,7 @@ export const devideCardForRoundStart = () => {
                         dealerCardsSum:dealerSum
                     })
                     resolve('derive starting cards');
-            }, 401);
+            }, 400);
         }) 
     }
     
@@ -106,7 +120,7 @@ export const addCard = (holder,NumOfsplits) => {
                 //     Ace: false
                 // };
                 card ={
-                    value:5,
+                    value:7,
                     symbol:'club',
                     Ace: false
                 };
@@ -124,7 +138,7 @@ export const addCard = (holder,NumOfsplits) => {
                     })
                     resolve('add card for deck number:'+NumOfsplits);
                     reject('add card FAILED for deck number:'+NumOfsplits);
-            }, 401);
+            }, 100);
          })
     }
 }
@@ -140,7 +154,7 @@ export const changeDeckSum = (newSum,deckOwner) => {
                     newSum,
                     deckOwner
                 })
-        }, 300);
+        }, 0);
     }
 }
 
@@ -167,7 +181,7 @@ export const removeDeck = (deckNumber) => {
                 type:actionTypes.REMOVE_DECK,
                 deckNumber
             })
-        }, 200);
+        }, 1000);
     }
 }
 
@@ -179,7 +193,7 @@ export const markDeckAsFinished = (deckNumber) => {
                     type:actionTypes.MARK_DECK_AS_FINISHED,
                     deckNumber
                 })
-            }, 400);
+            },  0);
     }
 }
 
