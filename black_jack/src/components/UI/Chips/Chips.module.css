@@ -18,10 +18,17 @@ p{
 
 }
 
-.Chips p::after {
+.Chips p:first-of-type:after {
     content: ' $';
     font-weight: lighter;
     font-family: fantasy;
     font-size: 16px;
     font-stretch: extra-expanded;
+}
+
+
+.Chips p:last-of-type {
+        color: rgb(198, 206, 95);
+        padding: 2px;
+        
 }

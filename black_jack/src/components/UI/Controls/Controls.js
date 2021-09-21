@@ -13,10 +13,16 @@ export class Controls extends Component {
         splitButton:false,
         standButton:false,
         insuranceButton:false,
-        intervalDisable:false
+        nextHandButton:false,
+        intervalDisable:false,
     }
 
  
+    clickMakeNextHand = () => {
+        this.disableDoubleClcicks();
+        this.props.changeNextStatus(true);
+    }
+
     doublingBid = () => {
         this.disableDoubleClcicks();
         this.props.doubleOperation(0,this.props.playerCards);
@@ -94,14 +100,17 @@ export class Controls extends Component {
         const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble()  
         && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[0]) && !this.state.intervalDisable && this.didPlayerFinished();
         
-        const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - Math.round(this.props.bid[0]*1.5) > 0) && !this.props.insurance ; 
+        const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - Math.round(this.props.bid[0]*1.5) > 0) && !this.props.insurance  ; 
         
+        const nextHandButtonVisibility = this.props.roundStatus === 'decision'  && !this.state.intervalDisable ;
+
         let newButtonState = {
             hitButton:hitButtonVisibility,
             doubleButton:doubleButtonVisibility,
             splitButton:splitButtonVisibility,
             standButton:standButtonVisibility,
-            insuranceButton:InsuranceButtonVisibility
+            insuranceButton:InsuranceButtonVisibility,
+            nextHandButton:nextHandButtonVisibility
         }
 
         
@@ -147,15 +156,26 @@ export class Controls extends Component {
                 >split
                 </Control>
                 <Control
+                    insurance={this.props.insurance}
                     clicked={() => {
                         // this.disableDoubleClcicks();
                         // this.props.makeInsurance(); 
+                        this.disableDoubleClcicks();
                         this.clickMakeInsurance();
                         
                     }
-                    }
-                    visibility={this.state.insuranceButton ? 'visible':'hidden'}
+                }
+                visibility={this.state.insuranceButton ? 'visible':'hidden'}
                 >insurance
+                </Control>
+                <Control
+                clicked={()=>{
+                    // this.disableDoubleClcicks();
+                    this.clickMakeNextHand();
+                }}
+                visibility={this.state.nextHandButton ? 'visible' : 'hidden'}
+                >
+                Next Hand
                 </Control>
                 {this.props.IsDeal ? <Control>Deal</Control>: null} 
             </div>
@@ -192,7 +212,9 @@ const mapDistpatchToProps = dispatch => {
         splitDecks : (activeDeckNumber) => dispatch(actions.splitAnotherDeck(activeDeckNumber)),
         actionPromise : (activeDeckNumber) => dispatch(actions.actionPromise(activeDeckNumber)),
         doubleOperation : (activeDeckNumber,playerCards) => dispatch(actions.doubleOperation(activeDeckNumber,playerCards)),
-        makeInsurance : () => dispatch(actions.makeInsurance())
+        makeInsurance : () => dispatch(actions.makeInsurance()),
+        changeNextStatus : (nextState) => dispatch(actions.changeNextValue(nextState))
+
 
     }
 }

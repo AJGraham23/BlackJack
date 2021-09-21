@@ -7,6 +7,7 @@ const initState = {
     playerCardsSum:[],
     activeDeckNumber:0,
     preActiveDeckNumber:0,
+    lastDeckResult:'',
     bamba:'bamba'
 }
 
@@ -137,7 +138,8 @@ const reduecer = (state = initState, action) => {
                 playerCardsSum:[...state.playerCardsSum,playerSum],
                 dealerCardsSum:dealerSum,
                 activeDeckNumber:0,
-                preActiveDeckNumber:0
+                preActiveDeckNumber:0,
+                lastDeckResult:''
             }
 
         case actionTypes.REMOVE_DECK:
@@ -220,8 +222,33 @@ const reduecer = (state = initState, action) => {
                     }
                     else return state.playerCards[deckIndex]
                 });
+                let newPlayerDecks = newPlayerCards;
+                let doubleOrderedCard;
+                // let activeDeckIndex = findActiveDeck(state.playerCards);
+                if(action.double)
+                {
+                    newPlayerDecks[0].activeDeck = false;
+                    newPlayerDecks[0].deckFinished = true;
+                    let activeDeckIndexDoubleEffect = findActiveDeck(newPlayerDecks);
+                    if(activeDeckIndexDoubleEffect === -1)
+                    {
+                        // nope
+                    }
+                    else {
+                        doubleOrderedCard = orderCardsDecks(newPlayerDecks,playerCardsSumArray,activeDeckIndexDoubleEffect)
+                        return {
+                            ...state,
+                            playerCards:doubleOrderedCard.OrderedCards,
+                            playerCardsSum:doubleOrderedCard.OrderedSum
+                        }
+                    }
+
+                }
+
                 newPlayerCards[activeDeckIndex].activeDeck = true;
                 newPlayerCards[activeDeckIndex].deckFinished = false;
+
+                // debugger;
                 return {...state,
                 playerCards:newPlayerCards,
                 playerCardsSum:playerCardsSumArray
@@ -262,9 +289,27 @@ const reduecer = (state = initState, action) => {
 
         case actionTypes.INIT_ROUND:
             console.log('init game');
+            let { dealerCards,
+            dealerCardsSum,
+            playerCards,
+            playerCardsSum,
+            activeDeckNumber
+            } = initState;
             return {
-                ...initState
+                dealerCards,
+                dealerCardsSum,
+                playerCards,
+                playerCardsSum,
+                activeDeckNumber,
+                preActiveDeckNumber:0,
+                lastDeckResult:state.lastDeckResult
             }
+        case actionTypes.UPDATE_DECK_RESULT:
+        return {
+            ...state,
+            lastDeckResult:action.lastDeckResult,
+
+        }
         case actionTypes.SPLIT_DECK:
            
             

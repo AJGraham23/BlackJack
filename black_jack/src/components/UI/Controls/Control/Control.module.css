@@ -1,5 +1,5 @@
-.Control {
-}
+/* .Control {
+} */
 
 .Control button{   
     background-color: rgb(33, 155, 211);
@@ -45,7 +45,14 @@ button:disabled, .shutDown button:hover{
     transform: initial;
     color: initial;
     box-shadow: 0 6px rgb(4, 63, 4);
-
+    
     /* transition: initial; */
 }
 
+
+.insuranceOn button{
+    background: radial-gradient(yellow,rgb(198, 206, 95));
+    cursor: not-allowed;
+    transform: initial;
+    color: initial;
+}

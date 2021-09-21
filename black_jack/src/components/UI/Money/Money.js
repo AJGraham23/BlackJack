@@ -43,6 +43,13 @@ export class Money extends Component {
         if(this.props.roundbid[0])
             this.bidInputValue = this.props.roundbid[0];
         else this.bidInputValue = +this.state.lastRoundBid;
+
+        // check if insurance is on
+
+        if(this.props.insuranceBid)
+        {
+            totalBids = totalBids + this.props.roundbid[0]/2;
+        }
         return (
             <div className={classes.Money}>
                 <div className={classes.budget}>
@@ -80,7 +87,8 @@ const MapStateToProps = state => {
         playerBadget : state.game.budget,
         playing : state.game.isPlaying,
         round : state.round.round,
-        roundbid : state.round.bid
+        roundbid : state.round.bid,
+        insuranceBid : state.round.insurance
     }
 }
 

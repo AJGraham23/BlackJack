@@ -15,9 +15,11 @@ export const DEALER_BUST = 'DEALER_BUST';
 export const INIT_ROUND_BID = 'INIT_ROUND_BID';
 export const CHANGE_HAND_RESULT = 'CHANGE_HAND_RESULT';
 export const INSURANCE = 'INSURANCE';
+export const CHANGE_NEXT_STATUS = 'CHANGE_NEXT_STATUS';
 
 
 // card reduecer
+export const UPDATE_DECK_RESULT = 'UPDATE_DECK_RESULT'
 export const ADD_CARD = 'ADD_CARD';
 export const CHANGE_CARDS_SUM = 'CHANGE_CARDS_SUM';
 export const DOUBLE_BID = 'DOUBLE_BID';

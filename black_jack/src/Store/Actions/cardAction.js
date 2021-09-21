@@ -32,20 +32,20 @@ export const devideCardForRoundStart = () => {
                     symbol:'club',
                     Ace: false
                 };
-
-                // let dealerSecondCard = {
-                //     value:10,
-                //     symbol:'club',
-                //     Ace: false                    
-                // }
-                // let dealerFirstCard =
-                //  {
-                //     value:6,
-                //     symbol:'heart',
-                //     Ace:false
-                // }
-                // let dealerCards = [dealerFirstCard,dealerSecondCard];
-                let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
+                
+                let dealerSecondCard = {
+                
+                    value:1,
+                    symbol:'heart',
+                    Ace:true
+                }
+                let dealerFirstCard = {
+                    value:10,
+                    symbol:'club',
+                    Ace: false                    
+                }
+                let dealerCards = [dealerFirstCard,dealerSecondCard];
+                // let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 // let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 
                 let dealerSum = checkCardsSum(dealerCards);
@@ -106,7 +106,7 @@ const checkCardsSum = (cards) => {
 
 
 
-export const addCard = (holder,NumOfsplits) => {
+export const addCard = (holder,NumOfsplits,double) => {
     return dispatch => {
 
         return new Promise((resolve,reject)=> {
@@ -134,9 +134,10 @@ export const addCard = (holder,NumOfsplits) => {
                         type: actionTypes.ADD_CARD,
                         card,
                         holder,
-                        NumOfsplits
+                        NumOfsplits,
+                        double:double ? true : false
                     })
-                    resolve('add card for deck number:'+NumOfsplits);
+                    resolve(card);
                     reject('add card FAILED for deck number:'+NumOfsplits);
             }, 100);
          })
@@ -193,11 +194,27 @@ export const markDeckAsFinished = (deckNumber) => {
                     type:actionTypes.MARK_DECK_AS_FINISHED,
                     deckNumber
                 })
-            },  0);
+            },  200);
     }
 }
 
+export const updateDeckResult = (result) => {
+    return dispatch => {
 
+        return setTimeout(() => {
+            setTimeout(() => {
+                dispatch({
+                    type:actionTypes.UPDATE_DECK_RESULT,
+                    lastDeckResult:''
+                })
+            }, 2000);
+            dispatch( {
+                type:actionTypes.UPDATE_DECK_RESULT,
+                lastDeckResult:result
+            });
+        },  50);
+    }
+}
 // what
 
 // type:actionTypes.MARK_DECK_AS_FINISHED,

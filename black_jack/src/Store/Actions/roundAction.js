@@ -21,7 +21,7 @@ export const stand = (activeDeckIndex) => {
                     })
                     //    'stand was triggered on deck ' : <activeDeckIndex>
                     resolve(+ activeDeckIndex);
-            }, 300);
+            }, 20);
             
         })
     }
@@ -49,7 +49,7 @@ export const roundStatus = (status) => {
                     status
                 });
                 resolve('round status will change to: '+ status);
-            }, 300);
+            }, 500);
         })
     }
 }
@@ -67,7 +67,7 @@ export const doubleBid = (numOfSplits) => {
                 //  holder:'player'
                 });
                 resolve('double bid was triggered on deck: '+ numOfSplits);
-            }, 300);
+            }, 500);
         })
     }
 }
@@ -86,7 +86,7 @@ export const changeHandResult = (result) => {
                     result  
                 });
                 resolve('change hand result to :'+result);
-            }, 300);
+            }, 500);
         })
     }
 }
@@ -101,7 +101,7 @@ export const dealerBust = () => {
                     type:actionTypes.DEALER_BUST
                 });
                 resolve('dealr busted !');
-            }, 300);
+            }, 500);
         })
     }
 }
@@ -126,6 +126,13 @@ export const initDeckBid = (bidDeckIndex) => {
 export const makeInsurance = () => {
     return {
         type:actionTypes.INSURANCE
+    }
+}
+
+export const changeNextValue = (nextValue) => {
+    return {
+        type:actionTypes.CHANGE_NEXT_STATUS,
+        nextValue:nextValue
     }
 }
 

@@ -3,6 +3,7 @@ import classes from './Game.module.css'
 import TableBoard from '../../components/TableBoard/TableBoard'
 import {connect} from 'react-redux'
 import * as actions from '../../Store/Actions/index'
+import AlertBox from '../../components/UI/AlertBox/AlertBox'
 
 
 const Game = (props) => {
@@ -10,7 +11,7 @@ const Game = (props) => {
     const gameRefInitMount = useRef(false);
     const [isInsuranceCollected, setIsInsuranceCollected] = useState(false)
     useEffect(() => {
-        if( props.roundStatus === 'decision') 
+        if( props.roundStatus === 'decision' && props.next) 
         {
             if(props.insurance && !isInsuranceCollected)
             {
@@ -33,24 +34,27 @@ const Game = (props) => {
                 console.log('we made it to the desicions phase!')
                 let playerResults = [];
                 let totalProfit = 0;
-                for (const index in props.playerSum) {
-                    if (props.playerSum[+index] < 22)
+                
+                    if (props.playerSum[+0] < 22 && props.next)
                     {
                         switch (true) {
-                            case props.playerSum[+index] - props.dealerSum > 0:
+                            case props.playerSum[+0] - props.dealerSum > 0:
                                 playerResults.push('win');
-                                totalProfit+= props.roundBids[index];
-                                props.collectProfitAndInitBid(props.roundBids[+index],+index)    
+                                props.updateDeckResult('win');
+                                totalProfit+= props.roundBids[0];
+                                props.collectProfitAndInitBid(props.roundBids[+0],+0)
                             break;
-                            case props.playerSum[+index] - props.dealerSum < 0:
+                            case props.playerSum[+0] - props.dealerSum < 0:
                                 playerResults.push('lost');
-                                totalProfit-= props.roundBids[index];
-                                props.collectProfitAndInitBid(-props.roundBids[+index],+index)
-                            break;
-                            case props.playerSum[+index] - props.dealerSum === 0:
-                                totalProfit+= props.roundBids[index];
+                                props.updateDeckResult('lost');
+                                totalProfit-= props.roundBids[0];
+                                props.collectProfitAndInitBid(-props.roundBids[+0],+0)
+                                break;
+                            case props.playerSum[+0] - props.dealerSum === 0:
+                                totalProfit+= props.roundBids[0];
+                                props.updateDeckResult('Tie');
                                 playerResults.push('tie');
-                                props.collectProfitAndInitBid(0,+index)   
+                                props.collectProfitAndInitBid(0,+0)   
                             break;
 
                             default:
@@ -58,41 +62,82 @@ const Game = (props) => {
                                 break;
                         }   
                     }
-                    else
+                    else if(props.next)
                     {
                         playerResults.push('lost');
-                        totalProfit-= props.roundBids[index];
-                        props.collectProfitAndInitBid(-props.roundBids[+index],+index)
+                        props.updateDeckResult('lost');
+                        totalProfit-= props.roundBids[0];
+                        props.collectProfitAndInitBid(-props.roundBids[+0],+0)
                     }
+                    if(props.next)
+                        props.changeNextValue(false);
+                    props.removeDeck(0);
+                
+                // for (const index in props.playerSum) {
 
-                    props.removeDeck(index);
-                }
-            props.initRound();
+                //     if (props.playerSum[+index] < 22 && props.next)
+                //     {
+                //         switch (true) {
+                //             case props.playerSum[+index] - props.dealerSum > 0:
+                //                 playerResults.push('win');
+                //                 totalProfit+= props.roundBids[index];
+                //                 props.collectProfitAndInitBid(props.roundBids[+index],+index)
+                //             break;
+                //             case props.playerSum[+index] - props.dealerSum < 0:
+                //                 playerResults.push('lost');
+                //                 totalProfit-= props.roundBids[index];
+                //                 props.collectProfitAndInitBid(-props.roundBids[+index],+index)
+                //             break;
+                //             case props.playerSum[+index] - props.dealerSum === 0:
+                //                 totalProfit+= props.roundBids[index];
+                //                 playerResults.push('tie');
+                //                 props.collectProfitAndInitBid(0,+index)   
+                //             break;
+
+                //             default:
+                //                 alert('something went wrong in [game.js] desicion');
+                //                 break;
+                //         }   
+                //     }
+                //     else if(props.next)
+                //     {
+                //         playerResults.push('lost');
+                //         totalProfit-= props.roundBids[index];
+                //         props.collectProfitAndInitBid(-props.roundBids[+index],+index)
+                //     }
+                //     if(props.next)
+                //         props.changeNextValue(false);
+                //     props.removeDeck(index);
+                // }
+            if(props.playerSum.length===1)
+                props.initRound();
         }
-    }, [props.roundStatus]); 
+    }, [props.roundStatus,props.next]); 
     
     useEffect(() => {
-        if( props.dealerBust) 
+        if( props.dealerBust  && props.next) 
         {
             console.log('we made it to the dealerBust phase!')
             let totalProfit = 0;
             for (const index in props.playerSum) {
-                if (props.playerSum[+index] < 22)
+                if (props.playerSum[+index] < 22 && props.next)
                 {
                     totalProfit+= props.roundBids[index];   
                     props.collectProfitAndInitBid(props.roundBids[+index],+index) 
                 }
                 else {
                     console.log('hand ' + (+index) + 'lost');
+                    props.updateDeckResult('lost');
                     totalProfit-= props.roundBids[index];   
                     props.collectProfitAndInitBid(-props.roundBids[+index],+index);
                 }
 
+                props.changeNextValue(false);
                 props.removeDeck(index);
             }
             props.initRound();
         }
-    }, [props.dealerBust]); 
+    }, [props.dealerBust,props.next]); 
     
     useEffect(() => {
         
@@ -117,6 +162,7 @@ const Game = (props) => {
 
 
     let finalResualt = '';
+    finalResualt = props.lastDeckResult;
     if(props.roundStatus === 'lost' || props.roundStatus === 'win' || props.roundStatus === 'tie')
     {
         finalResualt = props.roundStatus;
@@ -128,9 +174,11 @@ const Game = (props) => {
         
             <div className={classes.Game}>
                 <h1>Welcome to Blackjack</h1>
-                <p className={classes.roundResualt}>
-                    {finalResualt}
-                </p>
+                <div className={classes.roundResualt}>
+                    <p> {finalResualt}  </p>
+                </div>
+                {/* <AlertBox>
+                </AlertBox> */}
                 <TableBoard>
 
                 </TableBoard>
@@ -153,7 +201,10 @@ const MapStateToProps = state => {
       playerSum:state.cards.playerCardsSum,
       roundStarted:state.round.round,
       dealerBust:state.round.dealerBust,
-      insurance:state.round.insurance
+      insurance:state.round.insurance,
+      next:state.round.next,
+      lastDeckResult:state.cards.lastDeckResult
+
     }
 }
 
@@ -167,8 +218,10 @@ const mapDistpatchToProps = dispatch => {
         collectInsurance : (insuranceAmount) => dispatch(actions.collectInsurance(insuranceAmount)),
         // collectProfit : (profit) => dispatch(actions.collectProfits(profit)),
         collectProfitAndInitBid : (profit,bidIndex) => dispatch(actions.collectProfitAndInitBid(profit,bidIndex)),
-        removeDeck : (deckNumber) => dispatch(actions.removeDeck(deckNumber))
-        
+        removeDeck : (deckNumber) => dispatch(actions.removeDeck(deckNumber)),
+        changeNextValue : (nextState) => dispatch(actions.changeNextValue(nextState)),
+        updateDeckResult : (result) => dispatch(actions.updateDeckResult(result))
+
     }
 }
 

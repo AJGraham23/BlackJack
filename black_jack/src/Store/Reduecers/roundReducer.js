@@ -3,14 +3,16 @@ import * as actionTypes from '../Actions/actionTypes'
 
 const initState = {
     round:false,
-    split:0,
+    // split:0,
     roundStatus:'',
     handsResult:[''],
     stand:[false],
     dealerBust:false,
     bid:[0],
     originalBid:0,
-    insurance:false
+    insurance:false,
+    next:false,
+    
 }
 
 const orderStandArray = (standArray ,indexToSwitch = 0) => {
@@ -104,6 +106,8 @@ const reduecer = (state = initState, action) => {
         case actionTypes.INIT_ROUND_BID:
             let newBidsArray = state.bid.map((bidAmount,bidIndex)=> {
                 if(bidIndex === action.deckIndex)
+                    return state.bid[state.bid.length-1]
+                else if(bidIndex === action.deckIndex -1)
                     return 0
                 else
                     return bidAmount
@@ -161,7 +165,7 @@ const reduecer = (state = initState, action) => {
                 //     else return result;
                 // })
 
-                
+                // debugger;
                 
                 return {...state,
                     stand:newStandArray,
@@ -170,7 +174,12 @@ const reduecer = (state = initState, action) => {
                 }
             
             }
-        
+        case actionTypes.CHANGE_NEXT_STATUS:
+            return {
+                ...state,
+                next:action.nextValue
+            }
+       
         case actionTypes.CHANGE_HAND_RESULT:
             // console.log('init game');
             // decrease the split value if it's more than 0

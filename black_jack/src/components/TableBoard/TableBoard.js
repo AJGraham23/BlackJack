@@ -9,6 +9,8 @@ import * as actions from '../../Store/Actions/index'
 import Money from '../UI/Money/Money'
 import Controls from '../UI/Controls/Controls'
 import Chips from '../UI/Chips/Chips'
+import Control from '../UI/Controls/Control/Control'
+import Decision from './decisionPhase/Decision'
 
 export class TableBoard extends Component {
 
@@ -39,7 +41,12 @@ export class TableBoard extends Component {
                 </Money>
             </div>
             <div className={classes.Controls}>
-                <Controls></Controls>
+                {/* {this.props.desicionPhase === 'decision' ? 
+                <Decision></Decision> 
+                :
+            <Controls></Controls>
+        } */}
+        <Controls></Controls>
             </div>
         </Fragment>);
 
@@ -61,13 +68,14 @@ export class TableBoard extends Component {
 const MapStateToProps = state => {
     return {
         playing : state.game.isPlaying,
-        lost: state.game.lost        
+        lost: state.game.lost,
+        // desicionPhase: state.round.roundStatus    
     }
 }
 
 const mapDistpatchToProps = dispatch => {
     return {
-        startGame : () => dispatch(actions.startGame()),
+        // startGame : () => dispatch(actions.startGame()),
           }
 }
 

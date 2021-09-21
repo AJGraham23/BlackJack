@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import {doubleBid , stand, initDeckBid } from "./roundAction";
-import {addCard,markDeckAsFinished} from "./cardAction";
+import {addCard,markDeckAsFinished,updateDeckResult} from "./cardAction";
 import { collectProfits } from './gameAction'
 import { time } from "uniqid";
 
@@ -21,7 +21,8 @@ export {
     roundStatus,
     stand,
     doubleBid,
-    makeInsurance
+    makeInsurance,
+    changeNextValue
 } from './roundAction';
 
 export {
@@ -30,7 +31,8 @@ export {
     changeDeckSum,
     markDeckAsFinished,
     actionPromise,
-    removeDeck
+    removeDeck,
+    updateDeckResult
 } from './cardAction';
 
 export const initRound = (totalProfit) => {
@@ -41,7 +43,13 @@ export const initRound = (totalProfit) => {
                     type:actionTypes.INIT_ROUND,
                     totalProfit
                 })
-        }, 401);
+                // setTimeout(() => {
+                //     // the last hand result will be shown for 2 seconds
+                //     dispatch(updateDeckResult(''));
+                // }, 1000);
+            
+        }, 401)
+
     }
 }
 
@@ -64,13 +72,13 @@ export const splitAnotherDeck = (numOfSplits) => {
 
 
 export const doubleOperation = (activeDeck,playerCards) => {
-    
+    const playerDeck = playerCards;
     return dispatch => {
         // this.props.doubleBid(this.props.activeDeckNumber);
         // this.props.giveOneMoreCard(this.props.activeDeckNumber);
         // this.props.toStand(this.props.activeDeckNumber);
         // this.props.markDeckAsFinished(this.props.activeDeckNumber);
-        dispatch( doubleBid(activeDeck) )
+        dispatch( doubleBid(activeDeck,playerCards) )
         .then(value =>{
             console.log(value);
             var currentdate = new Date(); 
@@ -81,7 +89,7 @@ export const doubleOperation = (activeDeck,playerCards) => {
                 + currentdate.getMinutes() + ":" 
                 + currentdate.getSeconds();
                 console.log(datetime);
-                dispatch(addCard('player',activeDeck)).then(value2=>{
+                dispatch(addCard('player',activeDeck,'double',playerCards)).then(newCard=>{
                     setTimeout(() => {
                     var currentdate = new Date(); 
                     var datetime = "Last Sync: " + currentdate.getDate() + "/"
@@ -92,17 +100,25 @@ export const doubleOperation = (activeDeck,playerCards) => {
                         + currentdate.getSeconds();
                         console.log(datetime);
                     
-                    console.log(value2);
-                    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-                    let sumDeck = playerCards[0].reduce(reducer);
-                    if(sumDeck<21)
-                        dispatch(stand(activeDeck))
-                    // .then(value3=>{
-                        
+                    console.log('let\'s check the value 2 value:::::::::::::');
+                    // debugger;
+                    console.log(newCard);
+                    // debugger;
+                    const reducer = (accumulator, currentValue) => accumulator.value + currentValue.value;
+                    let sumDeck = playerCards[0].reduce(reducer) + newCard.value;
+                    // // let sumDeck = playerCards[0][0].value + playerCards[0][1].value + playerCards[0][2].value;
+                    // if(sumDeck > 21)
+                    //     playerCards[0].push(newCard)
+                    //     sumDeck = checkForDifferentSum(playerCards[0])
+                    // if(sumDeck<21)
+                    //     dispatch(stand(activeDeck))
+                    //     // .then(value3=>{
+                            
+                    dispatch(stand(activeDeck))
                         // console.log(value3);
                     // dispatch(markDeckAsFinished(0))
                     // })
-                }, 200);
+                }, 0);
             });
         })
 
@@ -120,6 +136,33 @@ export const collectProfitAndInitBid = (profit,bidIndex) => {
     }
 }
 
+
+const checkForDifferentSum = cards => {
+    let countAces = 0;
+    let sum = 0;
+    
+    for(let card of cards)
+    {
+        if(card.value > 10 && !card.Ace)
+        sum = sum + 10;
+        else if(card.Ace)    
+        {
+            countAces++;
+            sum+=11;
+        }
+        else sum+=card.value;
+    }   
+    let closestToPassed = sum;
+    if(countAces)
+    {   
+        for (let index = 1; index < countAces + 1; index++) {
+            if(sum - index*10 < 22)
+                return (sum - index*10)
+            closestToPassed = (sum - index*10)    
+        }   
+    }
+    return closestToPassed;
+}
 
 // export const collectInsurance = () => {
 //     return dispatch => {
