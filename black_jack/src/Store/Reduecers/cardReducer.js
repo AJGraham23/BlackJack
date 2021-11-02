@@ -8,6 +8,7 @@ const initState = {
     activeDeckNumber:0,
     preActiveDeckNumber:0,
     lastDeckResult:'',
+    insuranceResult:'',
     bamba:'bamba'
 }
 
@@ -308,6 +309,14 @@ const reduecer = (state = initState, action) => {
         return {
             ...state,
             lastDeckResult:action.lastDeckResult,
+
+        }
+        case actionTypes.CHECK_INSURANCE:
+
+        let result = state.dealerCards[0].value === 10;
+        return {
+            ...state,
+            insuranceResult:result
 
         }
         case actionTypes.SPLIT_DECK:

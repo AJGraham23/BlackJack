@@ -48,7 +48,7 @@ class Player extends Component {
                         //  && this.props.playerCards[0].deckFinished
                         ) {
                         console.log('changing handresult - player.js')
-                        this.props.updateDeckResult('lost');
+                        // this.props.updateDeckResult('BUST!');
                         if(!this.props.stand[0]) {
                             this.props.toStand(0);
                             this.props.markDeckAsFinished(0);
@@ -58,8 +58,9 @@ class Player extends Component {
                         && isEqual(prevProps.stand,this.props.stand)
                         // && !this.props.playerCards[0].deckFinished
                         ) {
-                        console.log('enable stand mode');
+                            console.log('enable stand mode');
                         if(!this.props.stand[0]) {
+                            this.props.updateDeckResult('BLACKJACKKKK!');
                             this.props.toStand(0);
                             this.props.markDeckAsFinished(0);
                         }

@@ -46,18 +46,19 @@ export class Money extends Component {
 
         // check if insurance is on
 
-        if(this.props.insuranceBid)
-        {
-            totalBids = totalBids + this.props.roundbid[0]/2;
-        }
+        // if(this.props.insuranceBid)
+        // {
+        //     totalBids = totalBids + this.props.roundbid[0]/2;
+        // }
         return (
             <div className={classes.Money}>
                 <div className={classes.budget}>
-                   budget: <div>
+                  <div>   budget:
                         {this.props.round 
                         ? this.props.playerBadget- totalBids  
                         : this.props.playerBadget }$
                        </div>
+                       {this.props.insuranceBid ? <p className={classes.insurance}>insurance: {Math.round(this.props.roundbid[0]/2)} </p> :''}
                 </div>
                 {
                 <form onSubmit={e=>this.mySubmitFunction(e)}>

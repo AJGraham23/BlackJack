@@ -100,7 +100,8 @@ export class Controls extends Component {
         const splitButtonVisibility = this.props.roundStatus === 'pending' && numOfPlayerCards === 2 && this.playerCanDouble()  
         && this.props.playerCards.length<4 && this.areCardsEqual(this.props.playerCards[0]) && !this.state.intervalDisable && this.didPlayerFinished();
         
-        const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - Math.round(this.props.bid[0]*1.5) > 0) && !this.props.insurance  ; 
+        const InsuranceButtonVisibility = this.props.dealerCards[1].Ace && this.props.bid[0] > 1 && (this.props.budget - Math.round(this.props.bid[0]*1.5) > 0) && !this.props.insurance  && this.props.playerCards.length === 1
+        && this.props.playerCards[0].length === 2  && this.props.roundStatus === 'pending' && !this.state.intervalDisable; 
         
         const nextHandButtonVisibility = this.props.roundStatus === 'decision'  && !this.state.intervalDisable ;
 

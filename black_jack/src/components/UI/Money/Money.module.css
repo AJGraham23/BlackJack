@@ -106,3 +106,8 @@
 .budget div {
     text-align: center;
 }
+
+.insurance {
+    color: rgb(198, 206, 95);
+    padding: 2px;
+}

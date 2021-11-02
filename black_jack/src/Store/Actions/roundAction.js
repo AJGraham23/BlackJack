@@ -123,7 +123,7 @@ export const initDeckBid = (bidDeckIndex) => {
 
 
 
-export const makeInsurance = () => {
+export const roundInsurance = () => {
     return {
         type:actionTypes.INSURANCE
     }

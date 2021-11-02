@@ -21,32 +21,32 @@ export const devideCardForRoundStart = () => {
                 // };
                 let FirstCard = GenerateRandomCard()
                 let SecondCard = GenerateRandomCard()
-                FirstCard={
-                    value:7,
-                    symbol:'diamond',
-                    Ace: false
-                };
+                // FirstCard={
+                //     value:7,
+                //     symbol:'diamond',
+                //     Ace: false
+                // };
 
-                SecondCard={
-                    value:7,
-                    symbol:'club',
-                    Ace: false
-                };
+                // SecondCard={
+                //     value:7,
+                //     symbol:'club',
+                //     Ace: false
+                // };
                 
-                let dealerSecondCard = {
+                // let dealerSecondCard = {
                 
-                    value:1,
-                    symbol:'heart',
-                    Ace:true
-                }
-                let dealerFirstCard = {
-                    value:10,
-                    symbol:'club',
-                    Ace: false                    
-                }
-                let dealerCards = [dealerFirstCard,dealerSecondCard];
+                //     value:6,
+                //     symbol:'heart',
+                //     Ace:false
+                // }
+                // let dealerFirstCard = {
+                //     value:10,
+                //     symbol:'club',
+                //     Ace: false                    
+                // }
+                // let dealerCards = [dealerFirstCard,dealerSecondCard];
                 // let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
-                // let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
+                let dealerCards = [GenerateRandomCard(),GenerateRandomCard()];
                 
                 let dealerSum = checkCardsSum(dealerCards);
                 if(FirstCard.value > 10)
@@ -119,11 +119,11 @@ export const addCard = (holder,NumOfsplits,double) => {
                 //     symbol:'club',
                 //     Ace: false
                 // };
-                card ={
-                    value:7,
-                    symbol:'club',
-                    Ace: false
-                };
+                // card ={
+                //     value:7,
+                //     symbol:'club',
+                //     Ace: false
+                // };
                 if (card.value > 10)
                     card.value = 10;
                 if(card.Ace)
@@ -214,6 +214,21 @@ export const updateDeckResult = (result) => {
             });
         },  50);
     }
+}
+export const checkInsurance = (result) => {
+    return dispatch => {
+
+        return new Promise((resolve,reject)=> {
+            return setTimeout(() => {
+
+                    
+                    dispatch( {
+                        type:actionTypes.CHECK_INSURANCE
+                    });
+                    resolve('check insurance on it\'s way');
+                },  50);
+            });
+        }
 }
 // what
 

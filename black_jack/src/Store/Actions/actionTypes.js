@@ -26,4 +26,5 @@ export const DOUBLE_BID = 'DOUBLE_BID';
 export const SPLIT_DECK = 'SPLIT_DECK';
 export const REMOVE_DECK = 'REMOVE_DECK';
 export const MARK_DECK_AS_FINISHED = 'MARK_DECK_AS_FINISHED';
+export const CHECK_INSURANCE = 'CHECK_INSURANCE';
 

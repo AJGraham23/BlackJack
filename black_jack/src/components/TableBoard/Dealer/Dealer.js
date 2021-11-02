@@ -45,6 +45,7 @@ export class Dealer extends Component {
                 case this.props.dealerCardsSum > 21:
                     console.log('dealer lost (cards > 21)')
                     this.props.dealerBust();
+                    this.props.changeRoundStatus('decision');
                     this.setState({
                         numOfRequestForCard:0
                     });

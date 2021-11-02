@@ -11,9 +11,9 @@ function Chips(props) {
             <p>
                  {totalBids} 
             </p>
-            <p>
+            {/* <p>
                  {props.insuranceBid ? '+ ' + props.roundBid[0]/2 + '(i)' : ''}    
-            </p>
+            </p> */}
         </div>
     )
 }

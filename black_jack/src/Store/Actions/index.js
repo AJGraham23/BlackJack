@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import {doubleBid , stand, initDeckBid } from "./roundAction";
-import {addCard,markDeckAsFinished,updateDeckResult} from "./cardAction";
+import {doubleBid , stand, initDeckBid , roundInsurance} from "./roundAction";
+import {addCard,markDeckAsFinished,updateDeckResult,checkInsurance} from "./cardAction";
 import { collectProfits } from './gameAction'
 import { time } from "uniqid";
 
@@ -21,7 +21,7 @@ export {
     roundStatus,
     stand,
     doubleBid,
-    makeInsurance,
+    roundInsurance,
     changeNextValue
 } from './roundAction';
 
@@ -32,7 +32,8 @@ export {
     markDeckAsFinished,
     actionPromise,
     removeDeck,
-    updateDeckResult
+    updateDeckResult,
+    checkInsurance
 } from './cardAction';
 
 export const initRound = (totalProfit) => {
@@ -136,6 +137,14 @@ export const collectProfitAndInitBid = (profit,bidIndex) => {
     }
 }
 
+export const makeInsurance = () => {
+    return dispatch=> {
+        
+        dispatch(checkInsurance()).then((res) => {
+                dispatch(roundInsurance());
+        });
+    }
+}
 
 const checkForDifferentSum = cards => {
     let countAces = 0;

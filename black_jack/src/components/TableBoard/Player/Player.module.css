@@ -44,9 +44,7 @@ h2{
 .Deck:first-child {
     width: 100%;
 }
-.amount {
-    /* position: absolute; */
-}
+
 
 .activeDeck {
     width: 100%;
@@ -60,8 +58,6 @@ h2{
     
 }
 
-.activeDeck:first-child {
-}
 
 .disableDeck {
     width: initial;
